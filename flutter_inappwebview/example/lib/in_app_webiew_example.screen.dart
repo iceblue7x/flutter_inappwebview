@@ -220,6 +220,15 @@ class _InAppWebViewExampleScreenState extends State<InAppWebViewExampleScreen> {
                   webViewController?.reload();
                 },
               ),
+              ElevatedButton(
+                child: Text("Enable PaymentRequest"),
+                onPressed: () async {
+                  final enabled = await webViewController?.enablePaymentRequest() ?? false;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("PaymentRequest enabled: $enabled")),
+                  );
+                },
+              ),
             ],
           ),
         ])));

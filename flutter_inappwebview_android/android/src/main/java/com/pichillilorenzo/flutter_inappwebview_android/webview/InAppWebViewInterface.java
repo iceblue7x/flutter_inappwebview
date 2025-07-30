@@ -122,4 +122,6 @@ public interface InAppWebViewInterface {
   @Nullable
   byte[] saveState();
   boolean restoreState(byte[] state);
+
+  boolean enablePaymentRequest(boolean retain);
 }

@@ -185,6 +185,7 @@ part 'webview_windows.dart';
 
 part 'keep_alive.dart';
 
+part 'payment_request.dart';
 void main() {
   final shouldSkip = kIsWeb
       ? false
@@ -284,6 +285,7 @@ void main() {
     handlesURLScheme();
     webViewAssetLoader();
     onContentSizeChanged();
+    paymentRequest();
     keepAlive();
   }, skip: shouldSkip);
 }

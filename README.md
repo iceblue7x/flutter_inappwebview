@@ -69,6 +69,11 @@ Add `flutter_inappwebview` as a [dependency in your pubspec.yaml file](https://f
 - [macOS](https://inappwebview.dev/docs/intro/#setup-macos)
 - [Windows](https://inappwebview.dev/docs/intro/#setup-windows)
 - [Web](https://inappwebview.dev/docs/intro/#setup-web)
+### Payment Request API (Android)
+
+Use `enablePaymentRequest()` on `InAppWebViewController` to enable the Payment Request API on supported Android WebView (version 94+).
+It returns `true` if the feature is available and has been enabled.
+
 
 ## Support
 

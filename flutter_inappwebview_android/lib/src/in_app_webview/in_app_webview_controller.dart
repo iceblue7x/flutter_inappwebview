@@ -2161,6 +2161,15 @@ class AndroidInAppWebViewController extends PlatformInAppWebViewController
     await channel?.invokeMethod('resumeTimers', args);
   }
 
+  /// Enables the Payment Request API if supported by the current WebView.
+  Future<bool> enablePaymentRequest({bool retain = true}) async {
+    Map<String, dynamic> args = <String, dynamic>{};
+    args.putIfAbsent('retain', () => retain);
+    args.putIfAbsent('id', () => id);
+    return await channel?.invokeMethod<bool>('enablePaymentRequest', args) ??
+        false;
+  }
+
   @override
   Future<AndroidPrintJobController?> printCurrentPage(
       {PrintJobSettings? settings}) async {
