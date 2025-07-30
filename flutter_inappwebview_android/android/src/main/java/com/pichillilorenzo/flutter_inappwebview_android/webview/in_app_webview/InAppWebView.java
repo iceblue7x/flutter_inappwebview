@@ -2170,6 +2170,19 @@ final public class InAppWebView extends InputAwareWebView implements InAppWebVie
     return restored;
   }
 
+  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+  public boolean enablePaymentRequest(boolean retain) {
+    if (!WebViewFeature.isFeatureSupported(WebViewFeature.PAYMENT_REQUEST)) {
+      return false;
+    }
+    WebSettings settings = getSettings();
+    WebSettingsCompat.setPaymentRequestEnabled(settings, true);
+    if (retain) {
+      WebSettingsCompat.setHasEnrolledInstrumentEnabled(settings, true);
+    }
+    return true;
+  }
+
 
   @Override
   public void dispose() {

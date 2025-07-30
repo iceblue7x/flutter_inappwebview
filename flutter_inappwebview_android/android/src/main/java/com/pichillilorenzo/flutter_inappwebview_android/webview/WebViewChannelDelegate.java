@@ -727,6 +727,15 @@ public class WebViewChannelDelegate extends ChannelDelegateImpl {
           result.success(false);
         }
         break;
+      case enablePaymentRequest:
+        if (webView != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+          Boolean retain = (Boolean) call.argument("retain");
+          boolean value = webView.enablePaymentRequest(retain != null ? retain : true);
+          result.success(value);
+        } else {
+          result.success(false);
+        }
+        break;
     }
   }
 

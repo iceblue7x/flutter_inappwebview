@@ -2483,6 +2483,21 @@ abstract class PlatformInAppWebViewController extends PlatformInterface
         'enableSlowWholeDocumentDraw is not implemented on the current platform');
   }
 
+  /// Enables the Payment Request API on Android WebView if supported.
+  ///
+  /// Returns `true` when the feature is available and has been enabled.
+  /// If the current WebView implementation doesn't support it, `false` is
+  /// returned.
+  ///
+  /// The optional [retain] parameter allows retaining the permission for the
+  /// current origin so that the prompt will not be shown again.
+  ///
+  /// **NOTE**: available only on Android Lollipop (API 21)+.
+  Future<bool> enablePaymentRequest({bool retain = true}) {
+    throw UnimplementedError(
+        'enablePaymentRequest is not implemented on the current platform');
+  }
+
   ///{@template flutter_inappwebview_platform_interface.PlatformInAppWebViewController.setJavaScriptBridgeName}
   ///Sets the name of the JavaScript Bridge object that will be used to interact with the WebView.
   ///This method should be called before any WebViews are created or when there are no WebViews.

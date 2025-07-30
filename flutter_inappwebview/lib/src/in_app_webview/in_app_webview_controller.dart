@@ -243,6 +243,10 @@ class InAppWebViewController {
   ///{@macro flutter_inappwebview_platform_interface.PlatformInAppWebViewController.resumeTimers}
   Future<void> resumeTimers() => platform.resumeTimers();
 
+  ///{@macro flutter_inappwebview_platform_interface.PlatformInAppWebViewController.enablePaymentRequest}
+  Future<bool> enablePaymentRequest({bool retain = true}) =>
+      platform.enablePaymentRequest(retain: retain);
+
   ///{@macro flutter_inappwebview_platform_interface.PlatformInAppWebViewController.printCurrentPage}
   Future<PrintJobController?> printCurrentPage(
       {PrintJobSettings? settings}) async {
