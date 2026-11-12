@@ -9,12 +9,13 @@ part of 'user_script_injection_time.dart';
 ///Class that represents contains the constants for the times at which to inject script content into a `WebView` used by an [UserScript].
 class UserScriptInjectionTime {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const UserScriptInjectionTime._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory UserScriptInjectionTime._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      UserScriptInjectionTime._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => UserScriptInjectionTime._internal(value, nativeValue());
 
   ///**NOTE for iOS**: A constant to inject the script after the document finishes loading, but before loading any other subresources.
   ///
@@ -36,8 +37,9 @@ class UserScriptInjectionTime {
   static UserScriptInjectionTime? fromValue(int? value) {
     if (value != null) {
       try {
-        return UserScriptInjectionTime.values
-            .firstWhere((element) => element.toValue() == value);
+        return UserScriptInjectionTime.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -49,8 +51,9 @@ class UserScriptInjectionTime {
   static UserScriptInjectionTime? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return UserScriptInjectionTime.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return UserScriptInjectionTime.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -66,8 +69,9 @@ class UserScriptInjectionTime {
   static UserScriptInjectionTime? byName(String? name) {
     if (name != null) {
       try {
-        return UserScriptInjectionTime.values
-            .firstWhere((element) => element.name() == name);
+        return UserScriptInjectionTime.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -85,14 +89,14 @@ class UserScriptInjectionTime {
   /// them will be represented in the returned map.
   static Map<String, UserScriptInjectionTime> asNameMap() =>
       <String, UserScriptInjectionTime>{
-        for (final value in UserScriptInjectionTime.values) value.name(): value
+        for (final value in UserScriptInjectionTime.values) value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -110,6 +114,11 @@ class UserScriptInjectionTime {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

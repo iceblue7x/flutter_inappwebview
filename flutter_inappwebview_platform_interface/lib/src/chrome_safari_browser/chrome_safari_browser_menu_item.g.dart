@@ -8,11 +8,10 @@ part of 'chrome_safari_browser_menu_item.dart';
 
 ///Class that represents a custom menu item for a [PlatformChromeSafariBrowser] instance.
 ///
-///**NOTE for Android native WebView**: Not available in an Android Trusted Web Activity.
-///
 ///**Officially Supported Platforms/Implementations**:
-///- Android native WebView
-///- iOS
+///- Android WebView:
+///    - Not available in an Android Trusted Web Activity.
+///- iOS WKWebView
 class ChromeSafariBrowserMenuItem {
   ///Use onClick instead.
   @Deprecated('Use onClick instead')
@@ -31,28 +30,32 @@ class ChromeSafariBrowserMenuItem {
   void Function(WebUri?, String)? onClick;
 
   ///
-  ///**NOTE for Android native WebView**: Not available in an Android Trusted Web Activity.
-  ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Android native WebView
-  ///- iOS
-  ChromeSafariBrowserMenuItem(
-      {required this.id,
-      required this.label,
-      this.image,
-      @Deprecated("Use onClick instead") this.action,
-      this.onClick});
+  ///- Android WebView:
+  ///    - Not available in an Android Trusted Web Activity.
+  ///- iOS WKWebView
+  ChromeSafariBrowserMenuItem({
+    required this.id,
+    required this.label,
+    this.image,
+    @Deprecated("Use onClick instead") this.action,
+    this.onClick,
+  });
 
   ///Gets a possible [ChromeSafariBrowserMenuItem] instance from a [Map] value.
-  static ChromeSafariBrowserMenuItem? fromMap(Map<String, dynamic>? map,
-      {EnumMethod? enumMethod}) {
+  static ChromeSafariBrowserMenuItem? fromMap(
+    Map<String, dynamic>? map, {
+    EnumMethod? enumMethod,
+  }) {
     if (map == null) {
       return null;
     }
     final instance = ChromeSafariBrowserMenuItem(
       id: map['id'],
-      image: UIImage.fromMap(map['image']?.cast<String, dynamic>(),
-          enumMethod: enumMethod),
+      image: UIImage.fromMap(
+        map['image']?.cast<String, dynamic>(),
+        enumMethod: enumMethod,
+      ),
       label: map['label'],
     );
     return instance;

@@ -9,12 +9,13 @@ part of 'custom_tabs_share_state.dart';
 ///Class representing the share state that should be applied to the custom tab.
 class CustomTabsShareState {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const CustomTabsShareState._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory CustomTabsShareState._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      CustomTabsShareState._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => CustomTabsShareState._internal(value, nativeValue());
 
   ///Applies the default share settings depending on the browser.
   static const SHARE_STATE_DEFAULT = CustomTabsShareState._internal(0, 0);
@@ -36,8 +37,9 @@ class CustomTabsShareState {
   static CustomTabsShareState? fromValue(int? value) {
     if (value != null) {
       try {
-        return CustomTabsShareState.values
-            .firstWhere((element) => element.toValue() == value);
+        return CustomTabsShareState.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -49,8 +51,9 @@ class CustomTabsShareState {
   static CustomTabsShareState? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return CustomTabsShareState.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return CustomTabsShareState.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -66,8 +69,9 @@ class CustomTabsShareState {
   static CustomTabsShareState? byName(String? name) {
     if (name != null) {
       try {
-        return CustomTabsShareState.values
-            .firstWhere((element) => element.name() == name);
+        return CustomTabsShareState.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -85,14 +89,14 @@ class CustomTabsShareState {
   /// them will be represented in the returned map.
   static Map<String, CustomTabsShareState> asNameMap() =>
       <String, CustomTabsShareState>{
-        for (final value in CustomTabsShareState.values) value.name(): value
+        for (final value in CustomTabsShareState.values) value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -112,6 +116,11 @@ class CustomTabsShareState {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

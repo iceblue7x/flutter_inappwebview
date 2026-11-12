@@ -9,17 +9,18 @@ part of 'browser_process_kind.dart';
 ///Indicates the process type used in the [BrowserProcessInfo] interface.
 class BrowserProcessKind {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const BrowserProcessKind._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory BrowserProcessKind._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      BrowserProcessKind._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => BrowserProcessKind._internal(value, nativeValue());
 
   ///Indicates the browser process kind.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   static final BROWSER = BrowserProcessKind._internalMultiPlatform(0, () {
     switch (defaultTargetPlatform) {
       case TargetPlatform.windows:
@@ -33,7 +34,7 @@ class BrowserProcessKind {
   ///Indicates the GPU process kind.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   static final GPU = BrowserProcessKind._internalMultiPlatform(4, () {
     switch (defaultTargetPlatform) {
       case TargetPlatform.windows:
@@ -47,7 +48,7 @@ class BrowserProcessKind {
   ///Indicates the PPAPI plugin broker process kind.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   static final PPAPI_BROKER = BrowserProcessKind._internalMultiPlatform(6, () {
     switch (defaultTargetPlatform) {
       case TargetPlatform.windows:
@@ -61,7 +62,7 @@ class BrowserProcessKind {
   ///Indicates the PPAPI plugin process kind.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   static final PPAPI_PLUGIN = BrowserProcessKind._internalMultiPlatform(5, () {
     switch (defaultTargetPlatform) {
       case TargetPlatform.windows:
@@ -75,7 +76,7 @@ class BrowserProcessKind {
   ///Indicates the render process kind.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   static final RENDERER = BrowserProcessKind._internalMultiPlatform(1, () {
     switch (defaultTargetPlatform) {
       case TargetPlatform.windows:
@@ -89,22 +90,24 @@ class BrowserProcessKind {
   ///Indicates the sandbox helper process kind.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
-  static final SANDBOX_HELPER =
-      BrowserProcessKind._internalMultiPlatform(3, () {
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.windows:
-        return 3;
-      default:
-        break;
-    }
-    return null;
-  });
+  ///- Windows WebView2
+  static final SANDBOX_HELPER = BrowserProcessKind._internalMultiPlatform(
+    3,
+    () {
+      switch (defaultTargetPlatform) {
+        case TargetPlatform.windows:
+          return 3;
+        default:
+          break;
+      }
+      return null;
+    },
+  );
 
   ///Indicates the utility process kind.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   static final UTILITY = BrowserProcessKind._internalMultiPlatform(2, () {
     switch (defaultTargetPlatform) {
       case TargetPlatform.windows:
@@ -130,8 +133,9 @@ class BrowserProcessKind {
   static BrowserProcessKind? fromValue(int? value) {
     if (value != null) {
       try {
-        return BrowserProcessKind.values
-            .firstWhere((element) => element.toValue() == value);
+        return BrowserProcessKind.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return BrowserProcessKind._internal(value, value);
       }
@@ -143,10 +147,11 @@ class BrowserProcessKind {
   static BrowserProcessKind? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return BrowserProcessKind.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return BrowserProcessKind.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
-        return BrowserProcessKind._internal(value, value);
+        return null;
       }
     }
     return null;
@@ -160,8 +165,9 @@ class BrowserProcessKind {
   static BrowserProcessKind? byName(String? name) {
     if (name != null) {
       try {
-        return BrowserProcessKind.values
-            .firstWhere((element) => element.name() == name);
+        return BrowserProcessKind.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -179,14 +185,14 @@ class BrowserProcessKind {
   /// them will be represented in the returned map.
   static Map<String, BrowserProcessKind> asNameMap() =>
       <String, BrowserProcessKind>{
-        for (final value in BrowserProcessKind.values) value.name(): value
+        for (final value in BrowserProcessKind.values) value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -217,7 +223,17 @@ class BrowserProcessKind {
 
   BrowserProcessKind operator |(BrowserProcessKind value) =>
       BrowserProcessKind._internal(
-          value.toValue() | _value, value.toNativeValue() | _nativeValue);
+        value.toValue() | _value,
+        value.toNativeValue() != null && _nativeValue != null
+            ? value.toNativeValue()! | _nativeValue!
+            : null,
+      );
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
+
   @override
   String toString() {
     return name();

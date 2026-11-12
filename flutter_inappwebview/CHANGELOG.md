@@ -1,5 +1,6 @@
 ## 6.2.0-beta.3
 
+- Added Linux support
 - Updated dependencies to the latest versions for all platform implementations:
   - `flutter_inappwebview_platform_interface`: `^1.4.0-beta.2` -> `^1.4.0-beta.3`
   - `flutter_inappwebview_android`: `^1.2.0-beta.2` -> `^1.2.0-beta.3`
@@ -7,28 +8,81 @@
   - `flutter_inappwebview_macos`: `^1.2.0-beta.2` -> `^1.2.0-beta.3`
   - `flutter_inappwebview_web`: `^1.2.0-beta.2` -> `^1.2.0-beta.3`
   - `flutter_inappwebview_windows`: `^0.7.0-beta.2` -> `^0.7.0-beta.3`
+  - `flutter_inappwebview_linux`: `^0.1.0-beta.1`
+- Added `InAppWebViewController.getFavicon` wrapper with `faviconImageFormat` support.
 - Fixed "When useShouldInterceptAjaxRequest is true, some ajax requests doesn't work" [#2197](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2197)
+- Mapped `isClassSupported`, `isPropertySupported`, `isMethodSupported` platform interface static methods to the corresponding plugin classes such as `InAppWebViewController`, `InAppWebView`, `InAppBrowser`, etc., in order to check if a class, property, or method is supported by the platform at runtime
+- Updated code generator
+- Minimum Dart SDK `^3.8.0`
+- Minimum Flutter SDK `>=3.32.0`
 
 #### Platform Interface
-- Added `saveState`, `restoreState` methods to `PlatformInAppWebViewController` class
-- Added `useOnAjaxReadyStateChange`, `useOnAjaxProgress`, `useOnShowFileChooser` properties to `InAppWebViewSettings`
-- Added `onShowFileChooser` WebView events
+- Updated `flutter_inappwebview_internal_annotations` dependency from `^1.2.0` to `^1.3.0`
+- Added `isClassSupported`, `isPropertySupported`, `isMethodSupported` static methods for all main classes, such as `PlatformInAppWebViewController`, `InAppWebViewSettings`, `PlatformInAppBrowser`, etc., in order to check if a class, property, or method is supported by the platform at runtime
+- Added `isSupported` method to all custom enum classes
+- Added `saveState`, `restoreState`, `requestEnterFullscreen`, `requestExitFullscreen`, `setVisible`, `setTargetRefreshRate`, `getTargetRefreshRate`, `requestPointerLock`, `requestPointerUnlock`, `getScreenScale`, `setScreenScale`, `isVisible`, `getFrameId`, `getFavicon`, `showSaveAsUI`, `getMemoryUsageTargetLevel`, `setMemoryUsageTargetLevel` methods to `PlatformInAppWebViewController` class
+- Added `useOnAjaxReadyStateChange`, `useOnAjaxProgress`, `useOnShowFileChooser`, `corsAllowlist`, `itpEnabled`, `darkMode`, `disableAnimations`, `fontAntialias`, `fontHintingStyle`, `fontSubpixelLayout`, `fontDPI`, `cursorBlinkTime`, `doubleClickDistance`, `doubleClickTime`, `dragThreshold`, `keyRepeatDelay`, `keyRepeatInterval`, `disableWebSecurity`, `enableWebRTC`, `webRTCUdpPortsRange`, `javaScriptCanAccessClipboard`, `allowModalDialogs`, `enableMedia`, `enableEncryptedMedia`, `enableMediaCapabilities`, `enableMockCaptureDevices`, `mediaContentTypesRequiringHardwareSupport`, `enableJavaScriptMarkup`, `enable2DCanvasAcceleration`, `allowTopNavigationToDataUrls` properties to `InAppWebViewSettings`
+- Added `onShowFileChooser`, `onContentLoading`, `onDOMContentLoaded`,  `onLaunchingExternalUriScheme`, `onFaviconChanged`, `onNotificationReceived`, `onSaveAsUIShowing`, `onSaveFileSecurityCheckStarting`, `onScreenCaptureStarting` WebView events
+- Added `PlatformWebNotificationController` class
+- Update code documentation
+- Deprecated `onReceivedIcon` in favor of `onFaviconChanged`
 
 #### Android Platform
+- Updated native dependencies:
+  - implementation from `'androidx.webkit:webkit:1.12.0'` to `'androidx.webkit:webkit:1.14.0'`
+  - implementation from `'androidx.browser:browser:1.8.0'` to `'androidx.browser:browser:1.9.0'`
+  - implementation from `'androidx.appcompat:appcompat:1.6.1'` to `'androidx.appcompat:appcompat:1.7.1'`
+  - implementation from `'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'` to `'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0'`
+- Updated android native `compileOptions` to `JavaVersion.VERSION_17`
 - Implemented `saveState`, `restoreState` InAppWebViewController methods
 - Implemented `onShowFileChooser` WebView event
+- Updated InAppBrowser toolbar top
 - Merged "Android: implemented PlatformPrintJobController.onComplete" [#2216](https://github.com/pichillilorenzo/flutter_inappwebview/pull/2216) (thanks to [Doflatango](https://github.com/Doflatango))
+- Fixed "When useShouldInterceptAjaxRequest is true, some ajax requests doesn't work" [#2197](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2197)
+- Merged "Fixed recursive calling toMap in AndroidInternalStoragePathHandler" [#2452](https://github.com/pichillilorenzo/flutter_inappwebview/pull/2452) (thanks to [roberthofstra](https://github.com/roberthofstra))
+- Fixed recursive `toMap` call for `AndroidInternalStoragePathHandler` [#2451](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2451)
+- Fixed "Error when updating webview settings Android in v6.2.0-beta.2" [#2449](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2449)
+- Fixed "[Android] Upgrade to AGP 9" [#2765](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2765)
+- Fixed "update android apg version to 8.9.1 or higer" [#2761](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2761)
+- Fixed "InAppWebViewController.goTo" implementation
+- Merged "fix #2484, Remove not-empty assert for Cookie.value" [#2486](https://github.com/pichillilorenzo/flutter_inappwebview/pull/2486) (thanks to [laishere](https://github.com/laishere))
 
 #### macOS and iOS Platforms
 - Implemented `saveState`, `restoreState` InAppWebViewController methods
 - Implemented `PlatformProxyController` class
-- Merged "Add proxy support for iOS" [#2362](https://github.com/pichillilorenzo/flutter_inappwebview/pull/2362) (thanks to [yerkejs](https://github.com/yerkejs))
+- Add Swift Package Manager support [#2409](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2409)
 - Fixed "[iOS] Webview opened with windowId does not receive javascript handler callback." [#2393](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2393)
 - Fixed internal javascript callback handlers when the WebView has windowId not null
-- macos: Fixed crash of unhandled `onPrintRequest` WebView event
+- Fixed crash of unhandled `onPrintRequest` WebView event
+- Fixed "When useShouldInterceptAjaxRequest is true, some ajax requests doesn't work" [#2197](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2197)
+- Fixed "iOS App rejected by apple for violating Guideline 2.5.1 - Performance - Software Requirements | Flutter 3.35.x seems to use non-public or deprecated APIs" [#2754](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2754)
+- Fixed "InAppWebViewController.goTo" implementation
+- Merged "Add proxy support for iOS" [#2362](https://github.com/pichillilorenzo/flutter_inappwebview/pull/2362) (thanks to [yerkejs](https://github.com/yerkejs))
+- Merged "🐛 fix MacOS: when using the `WebMessageListener` `onPostMessage` method, the message parameter is unexpectedly empty" [#2481](https://github.com/pichillilorenzo/flutter_inappwebview/pull/2481) (thanks to [imoyakin](https://github.com/imoyakin))
+- Merged "fix #2484, Remove not-empty assert for Cookie.value" [#2486](https://github.com/pichillilorenzo/flutter_inappwebview/pull/2486) (thanks to [laishere](https://github.com/laishere))
+- Merged "Fix gesture recognition delay prevention for latest Flutter versions" [#2538](https://github.com/pichillilorenzo/flutter_inappwebview/pull/2538) (thanks to [muccy-timeware](https://github.com/muccy-timeware))
 
 ### Windows
+- Updated Microsoft.Web.WebView2 SDK version from `1.0.2849.39` to `1.0.3650.58`
+- Implemented `getFrameId`, `getFavicon`, `showSaveAsUI`, `getMemoryUsageTargetLevel`, `setMemoryUsageTargetLevel` InAppWebViewController method
+- Added support for `onEnterFullscreen`, `onExitFullscreen`, `onContentLoading`, `onDOMContentLoaded`,  `onLaunchingExternalUriScheme`, `onFaviconChanged`, `onNotificationReceived`, `onSaveAsUIShowing`, `onSaveFileSecurityCheckStarting`, `onScreenCaptureStarting` WebView events.
+- Added native FindInteractionController implementation using WebView2 `ICoreWebView2Find`.
+- Implemented `setFindOptions` FindInteractionController method
+- Implemented `PlatformWebNotificationController` feature
 - Merged "windows: fix WebViewEnvironment dispose crash" [#2433](https://github.com/pichillilorenzo/flutter_inappwebview/pull/2433) (thanks to [GooRingX](https://github.com/GooRingX))
+- Merged "fix #2484, Remove not-empty assert for Cookie.value" [#2486](https://github.com/pichillilorenzo/flutter_inappwebview/pull/2486) (thanks to [laishere](https://github.com/laishere))
+- Merged "Prevent Unpredictable Close On Windows" [#2543](https://github.com/pichillilorenzo/flutter_inappwebview/pull/2543) (thanks to [momadvisor](https://github.com/momadvisor))
+
+### Web
+- Updated `onCreateWindow` WebView event
+- Implemented `onCloseWindow`, `onCallJsHandler` WebView events
+- Implemented `addJavaScriptHandler`, `removeJavaScriptHandler`, `hasJavaScriptHandler`, `addUserScript`, `addUserScripts`, `removeUserScript`, `removeUserScriptsByGroupName`, `removeUserScripts`, `hasUserScript` InAppWebViewController methods
+- Implemented `setJavaScriptBridgeName`, `getJavaScriptBridgeName`, `getDefaultUserAgent` InAppWebViewController static methods
+- Implemented `javaScriptHandlersOriginAllowList`, `javaScriptBridgeEnabled`, `javaScriptBridgeOriginAllowList`, `hasJavaScriptHandler`, `addUserScript`, `addUserScripts`, `removeUserScript` of `InAppWebViewSettings`
+- Merged "fix #2484, Remove not-empty assert for Cookie.value" [#2486](https://github.com/pichillilorenzo/flutter_inappwebview/pull/2486) (thanks to [laishere](https://github.com/laishere))
+
+### Linux
+- Initial implementation
 
 ## 6.2.0-beta.2
 

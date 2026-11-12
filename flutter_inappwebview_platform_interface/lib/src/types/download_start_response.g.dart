@@ -13,7 +13,7 @@ class DownloadStartResponse {
   ///If canceled, the download save dialog is not displayed regardless of the [handled] property.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   DownloadStartResponseAction? action;
 
   ///Set this flag to `true` to hide the default download dialog for this download.
@@ -21,7 +21,7 @@ class DownloadStartResponse {
   ///The download will progress as normal if it is not canceled, there will just be no default UI shown.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   bool handled;
 
   ///The path to the file.
@@ -32,24 +32,31 @@ class DownloadStartResponse {
   ///If the directory does not exist, it is created.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   String? resultFilePath;
-  DownloadStartResponse(
-      {this.action, required this.handled, this.resultFilePath});
+  DownloadStartResponse({
+    this.action,
+    required this.handled,
+    this.resultFilePath,
+  });
 
   ///Gets a possible [DownloadStartResponse] instance from a [Map] value.
-  static DownloadStartResponse? fromMap(Map<String, dynamic>? map,
-      {EnumMethod? enumMethod}) {
+  static DownloadStartResponse? fromMap(
+    Map<String, dynamic>? map, {
+    EnumMethod? enumMethod,
+  }) {
     if (map == null) {
       return null;
     }
     final instance = DownloadStartResponse(
       action: switch (enumMethod ?? EnumMethod.nativeValue) {
-        EnumMethod.nativeValue =>
-          DownloadStartResponseAction.fromNativeValue(map['action']),
-        EnumMethod.value =>
-          DownloadStartResponseAction.fromValue(map['action']),
-        EnumMethod.name => DownloadStartResponseAction.byName(map['action'])
+        EnumMethod.nativeValue => DownloadStartResponseAction.fromNativeValue(
+          map['action'],
+        ),
+        EnumMethod.value => DownloadStartResponseAction.fromValue(
+          map['action'],
+        ),
+        EnumMethod.name => DownloadStartResponseAction.byName(map['action']),
       },
       handled: map['handled'],
       resultFilePath: map['resultFilePath'],
@@ -63,7 +70,7 @@ class DownloadStartResponse {
       "action": switch (enumMethod ?? EnumMethod.nativeValue) {
         EnumMethod.nativeValue => action?.toNativeValue(),
         EnumMethod.value => action?.toValue(),
-        EnumMethod.name => action?.name()
+        EnumMethod.name => action?.name(),
       },
       "handled": handled,
       "resultFilePath": resultFilePath,

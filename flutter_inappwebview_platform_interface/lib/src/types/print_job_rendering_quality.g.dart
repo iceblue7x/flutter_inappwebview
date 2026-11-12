@@ -9,18 +9,19 @@ part of 'print_job_rendering_quality.dart';
 ///Class representing the rendering quality of a [PlatformPrintJobController].
 class PrintJobRenderingQuality {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const PrintJobRenderingQuality._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory PrintJobRenderingQuality._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      PrintJobRenderingQuality._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => PrintJobRenderingQuality._internal(value, nativeValue());
 
   ///Renders the printing at the best possible quality, regardless of speed.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- iOS
-  ///- MacOS
+  ///- iOS WKWebView
+  ///- macOS WKWebView
   static final BEST = PrintJobRenderingQuality._internalMultiPlatform(0, () {
     switch (defaultTargetPlatform) {
       case TargetPlatform.iOS:
@@ -37,20 +38,22 @@ class PrintJobRenderingQuality {
   ///This option should be used only after establishing that best quality rendering does indeed make the user interface unresponsive.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- iOS
-  ///- MacOS
-  static final RESPONSIVE =
-      PrintJobRenderingQuality._internalMultiPlatform(1, () {
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.iOS:
-        return 1;
-      case TargetPlatform.macOS:
-        return 1;
-      default:
-        break;
-    }
-    return null;
-  });
+  ///- iOS WKWebView
+  ///- macOS WKWebView
+  static final RESPONSIVE = PrintJobRenderingQuality._internalMultiPlatform(
+    1,
+    () {
+      switch (defaultTargetPlatform) {
+        case TargetPlatform.iOS:
+          return 1;
+        case TargetPlatform.macOS:
+          return 1;
+        default:
+          break;
+      }
+      return null;
+    },
+  );
 
   ///Set of all values of [PrintJobRenderingQuality].
   static final Set<PrintJobRenderingQuality> values = [
@@ -62,8 +65,9 @@ class PrintJobRenderingQuality {
   static PrintJobRenderingQuality? fromValue(int? value) {
     if (value != null) {
       try {
-        return PrintJobRenderingQuality.values
-            .firstWhere((element) => element.toValue() == value);
+        return PrintJobRenderingQuality.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -75,8 +79,9 @@ class PrintJobRenderingQuality {
   static PrintJobRenderingQuality? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return PrintJobRenderingQuality.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return PrintJobRenderingQuality.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -92,8 +97,9 @@ class PrintJobRenderingQuality {
   static PrintJobRenderingQuality? byName(String? name) {
     if (name != null) {
       try {
-        return PrintJobRenderingQuality.values
-            .firstWhere((element) => element.name() == name);
+        return PrintJobRenderingQuality.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -111,14 +117,15 @@ class PrintJobRenderingQuality {
   /// them will be represented in the returned map.
   static Map<String, PrintJobRenderingQuality> asNameMap() =>
       <String, PrintJobRenderingQuality>{
-        for (final value in PrintJobRenderingQuality.values) value.name(): value
+        for (final value in PrintJobRenderingQuality.values)
+          value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -136,6 +143,11 @@ class PrintJobRenderingQuality {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

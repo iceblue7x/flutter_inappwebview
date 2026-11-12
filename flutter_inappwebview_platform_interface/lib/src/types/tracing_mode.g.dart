@@ -9,9 +9,9 @@ part of 'tracing_mode.dart';
 ///Constants that describe the results summary the find panel UI includes.
 class TracingMode {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const TracingMode._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory TracingMode._internalMultiPlatform(int value, Function nativeValue) =>
       TracingMode._internal(value, nativeValue());
 
@@ -37,8 +37,9 @@ class TracingMode {
   static TracingMode? fromValue(int? value) {
     if (value != null) {
       try {
-        return TracingMode.values
-            .firstWhere((element) => element.toValue() == value);
+        return TracingMode.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -50,8 +51,9 @@ class TracingMode {
   static TracingMode? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return TracingMode.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return TracingMode.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -67,8 +69,9 @@ class TracingMode {
   static TracingMode? byName(String? name) {
     if (name != null) {
       try {
-        return TracingMode.values
-            .firstWhere((element) => element.name() == name);
+        return TracingMode.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -85,14 +88,14 @@ class TracingMode {
   /// same value, or being values of different enum type), at most one of
   /// them will be represented in the returned map.
   static Map<String, TracingMode> asNameMap() => <String, TracingMode>{
-        for (final value in TracingMode.values) value.name(): value
-      };
+    for (final value in TracingMode.values) value.name(): value,
+  };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -110,6 +113,11 @@ class TracingMode {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

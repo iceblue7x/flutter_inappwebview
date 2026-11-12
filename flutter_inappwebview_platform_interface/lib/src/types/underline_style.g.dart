@@ -9,12 +9,13 @@ part of 'underline_style.dart';
 ///Class that represents the constants for the underline style and strikethrough style attribute keys.
 class UnderlineStyle {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const UnderlineStyle._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory UnderlineStyle._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      UnderlineStyle._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => UnderlineStyle._internal(value, nativeValue());
 
   ///Draw the line only beneath or through words, not whitespace.
   static const BY_WORD = UnderlineStyle._internal(32768, 32768);
@@ -60,8 +61,9 @@ class UnderlineStyle {
   static UnderlineStyle? fromValue(int? value) {
     if (value != null) {
       try {
-        return UnderlineStyle.values
-            .firstWhere((element) => element.toValue() == value);
+        return UnderlineStyle.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -73,8 +75,9 @@ class UnderlineStyle {
   static UnderlineStyle? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return UnderlineStyle.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return UnderlineStyle.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -90,8 +93,9 @@ class UnderlineStyle {
   static UnderlineStyle? byName(String? name) {
     if (name != null) {
       try {
-        return UnderlineStyle.values
-            .firstWhere((element) => element.name() == name);
+        return UnderlineStyle.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -108,14 +112,14 @@ class UnderlineStyle {
   /// same value, or being values of different enum type), at most one of
   /// them will be represented in the returned map.
   static Map<String, UnderlineStyle> asNameMap() => <String, UnderlineStyle>{
-        for (final value in UnderlineStyle.values) value.name(): value
-      };
+    for (final value in UnderlineStyle.values) value.name(): value,
+  };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -148,6 +152,11 @@ class UnderlineStyle {
   @override
   bool operator ==(value) => value == _value;
 
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
+
   @override
   String toString() {
     return name();
@@ -159,12 +168,13 @@ class UnderlineStyle {
 @Deprecated('Use UnderlineStyle instead')
 class IOSNSUnderlineStyle {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const IOSNSUnderlineStyle._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory IOSNSUnderlineStyle._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      IOSNSUnderlineStyle._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => IOSNSUnderlineStyle._internal(value, nativeValue());
 
   ///Draw the line only beneath or through words, not whitespace.
   static const BY_WORD = IOSNSUnderlineStyle._internal(32768, 32768);
@@ -210,8 +220,9 @@ class IOSNSUnderlineStyle {
   static IOSNSUnderlineStyle? fromValue(int? value) {
     if (value != null) {
       try {
-        return IOSNSUnderlineStyle.values
-            .firstWhere((element) => element.toValue() == value);
+        return IOSNSUnderlineStyle.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -223,8 +234,9 @@ class IOSNSUnderlineStyle {
   static IOSNSUnderlineStyle? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return IOSNSUnderlineStyle.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return IOSNSUnderlineStyle.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -240,8 +252,9 @@ class IOSNSUnderlineStyle {
   static IOSNSUnderlineStyle? byName(String? name) {
     if (name != null) {
       try {
-        return IOSNSUnderlineStyle.values
-            .firstWhere((element) => element.name() == name);
+        return IOSNSUnderlineStyle.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -259,14 +272,14 @@ class IOSNSUnderlineStyle {
   /// them will be represented in the returned map.
   static Map<String, IOSNSUnderlineStyle> asNameMap() =>
       <String, IOSNSUnderlineStyle>{
-        for (final value in IOSNSUnderlineStyle.values) value.name(): value
+        for (final value in IOSNSUnderlineStyle.values) value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -298,6 +311,11 @@ class IOSNSUnderlineStyle {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

@@ -1,9 +1,9 @@
 part of 'main.dart';
 
 void paymentRequest() {
-  final shouldSkip = kIsWeb
-      ? true
-      : ![TargetPlatform.android].contains(defaultTargetPlatform);
+  final shouldSkip = !InAppWebViewController.isMethodSupported(
+    PlatformInAppWebViewControllerMethod.enablePaymentRequest,
+  );
 
   skippableTestWidgets('enablePaymentRequest', (WidgetTester tester) async {
     final completer = Completer<InAppWebViewController>();

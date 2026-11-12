@@ -9,12 +9,13 @@ part of 'modal_transition_style.dart';
 ///Class used to specify the transition style when presenting a view controller.
 class ModalTransitionStyle {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const ModalTransitionStyle._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory ModalTransitionStyle._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      ModalTransitionStyle._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => ModalTransitionStyle._internal(value, nativeValue());
 
   ///When the view controller is presented, its view slides up from the bottom of the screen.
   ///On dismissal, the view slides back down. This is the default transition style.
@@ -46,8 +47,9 @@ class ModalTransitionStyle {
   static ModalTransitionStyle? fromValue(int? value) {
     if (value != null) {
       try {
-        return ModalTransitionStyle.values
-            .firstWhere((element) => element.toValue() == value);
+        return ModalTransitionStyle.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -59,8 +61,9 @@ class ModalTransitionStyle {
   static ModalTransitionStyle? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return ModalTransitionStyle.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return ModalTransitionStyle.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -76,8 +79,9 @@ class ModalTransitionStyle {
   static ModalTransitionStyle? byName(String? name) {
     if (name != null) {
       try {
-        return ModalTransitionStyle.values
-            .firstWhere((element) => element.name() == name);
+        return ModalTransitionStyle.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -95,14 +99,14 @@ class ModalTransitionStyle {
   /// them will be represented in the returned map.
   static Map<String, ModalTransitionStyle> asNameMap() =>
       <String, ModalTransitionStyle>{
-        for (final value in ModalTransitionStyle.values) value.name(): value
+        for (final value in ModalTransitionStyle.values) value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -125,6 +129,11 @@ class ModalTransitionStyle {
   @override
   bool operator ==(value) => value == _value;
 
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
+
   @override
   String toString() {
     return name();
@@ -136,12 +145,13 @@ class ModalTransitionStyle {
 @Deprecated('Use ModalTransitionStyle instead')
 class IOSUIModalTransitionStyle {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const IOSUIModalTransitionStyle._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory IOSUIModalTransitionStyle._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      IOSUIModalTransitionStyle._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => IOSUIModalTransitionStyle._internal(value, nativeValue());
 
   ///When the view controller is presented, its view slides up from the bottom of the screen.
   ///On dismissal, the view slides back down. This is the default transition style.
@@ -173,8 +183,9 @@ class IOSUIModalTransitionStyle {
   static IOSUIModalTransitionStyle? fromValue(int? value) {
     if (value != null) {
       try {
-        return IOSUIModalTransitionStyle.values
-            .firstWhere((element) => element.toValue() == value);
+        return IOSUIModalTransitionStyle.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -186,8 +197,9 @@ class IOSUIModalTransitionStyle {
   static IOSUIModalTransitionStyle? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return IOSUIModalTransitionStyle.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return IOSUIModalTransitionStyle.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -203,8 +215,9 @@ class IOSUIModalTransitionStyle {
   static IOSUIModalTransitionStyle? byName(String? name) {
     if (name != null) {
       try {
-        return IOSUIModalTransitionStyle.values
-            .firstWhere((element) => element.name() == name);
+        return IOSUIModalTransitionStyle.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -223,14 +236,14 @@ class IOSUIModalTransitionStyle {
   static Map<String, IOSUIModalTransitionStyle> asNameMap() =>
       <String, IOSUIModalTransitionStyle>{
         for (final value in IOSUIModalTransitionStyle.values)
-          value.name(): value
+          value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -252,6 +265,11 @@ class IOSUIModalTransitionStyle {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

@@ -9,12 +9,13 @@ part of 'form_resubmission_action.dart';
 ///Class that represents the action to take used by the [PlatformWebViewCreationParams.onFormResubmission] event.
 class FormResubmissionAction {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const FormResubmissionAction._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory FormResubmissionAction._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      FormResubmissionAction._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => FormResubmissionAction._internal(value, nativeValue());
 
   ///Don't resend data
   static const DONT_RESEND = FormResubmissionAction._internal(1, 1);
@@ -32,8 +33,9 @@ class FormResubmissionAction {
   static FormResubmissionAction? fromValue(int? value) {
     if (value != null) {
       try {
-        return FormResubmissionAction.values
-            .firstWhere((element) => element.toValue() == value);
+        return FormResubmissionAction.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -45,8 +47,9 @@ class FormResubmissionAction {
   static FormResubmissionAction? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return FormResubmissionAction.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return FormResubmissionAction.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -62,8 +65,9 @@ class FormResubmissionAction {
   static FormResubmissionAction? byName(String? name) {
     if (name != null) {
       try {
-        return FormResubmissionAction.values
-            .firstWhere((element) => element.name() == name);
+        return FormResubmissionAction.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -81,14 +85,14 @@ class FormResubmissionAction {
   /// them will be represented in the returned map.
   static Map<String, FormResubmissionAction> asNameMap() =>
       <String, FormResubmissionAction>{
-        for (final value in FormResubmissionAction.values) value.name(): value
+        for (final value in FormResubmissionAction.values) value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -106,6 +110,11 @@ class FormResubmissionAction {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

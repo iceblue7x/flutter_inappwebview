@@ -9,12 +9,13 @@ part of 'client_cert_response_action.dart';
 ///Class used by [ClientCertResponse] class.
 class ClientCertResponseAction {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const ClientCertResponseAction._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory ClientCertResponseAction._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      ClientCertResponseAction._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => ClientCertResponseAction._internal(value, nativeValue());
 
   ///Cancel this request.
   static const CANCEL = ClientCertResponseAction._internal(0, 0);
@@ -36,8 +37,9 @@ class ClientCertResponseAction {
   static ClientCertResponseAction? fromValue(int? value) {
     if (value != null) {
       try {
-        return ClientCertResponseAction.values
-            .firstWhere((element) => element.toValue() == value);
+        return ClientCertResponseAction.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -49,8 +51,9 @@ class ClientCertResponseAction {
   static ClientCertResponseAction? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return ClientCertResponseAction.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return ClientCertResponseAction.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -66,8 +69,9 @@ class ClientCertResponseAction {
   static ClientCertResponseAction? byName(String? name) {
     if (name != null) {
       try {
-        return ClientCertResponseAction.values
-            .firstWhere((element) => element.name() == name);
+        return ClientCertResponseAction.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -85,14 +89,15 @@ class ClientCertResponseAction {
   /// them will be represented in the returned map.
   static Map<String, ClientCertResponseAction> asNameMap() =>
       <String, ClientCertResponseAction>{
-        for (final value in ClientCertResponseAction.values) value.name(): value
+        for (final value in ClientCertResponseAction.values)
+          value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -112,6 +117,11 @@ class ClientCertResponseAction {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

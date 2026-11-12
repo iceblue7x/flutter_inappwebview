@@ -9,39 +9,80 @@ part of 'http_auth_response_action.dart';
 ///Class used by [HttpAuthResponse] class.
 class HttpAuthResponseAction {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const HttpAuthResponseAction._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory HttpAuthResponseAction._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      HttpAuthResponseAction._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => HttpAuthResponseAction._internal(value, nativeValue());
 
   ///Instructs the WebView to cancel the authentication request.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Android native WebView
-  ///- iOS
-  ///- MacOS
-  ///- Windows
-  static const CANCEL = HttpAuthResponseAction._internal(0, 0);
+  ///- Android WebView
+  ///- iOS WKWebView
+  ///- macOS WKWebView
+  ///- Windows WebView2
+  static final CANCEL = HttpAuthResponseAction._internalMultiPlatform(0, () {
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return 0;
+      case TargetPlatform.iOS:
+        return 0;
+      case TargetPlatform.macOS:
+        return 0;
+      case TargetPlatform.windows:
+        return 0;
+      default:
+        break;
+    }
+    return null;
+  });
 
   ///Instructs the WebView to proceed with the authentication with the given credentials.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Android native WebView
-  ///- iOS
-  ///- MacOS
-  ///- Windows
-  static const PROCEED = HttpAuthResponseAction._internal(1, 1);
+  ///- Android WebView
+  ///- iOS WKWebView
+  ///- macOS WKWebView
+  ///- Windows WebView2
+  static final PROCEED = HttpAuthResponseAction._internalMultiPlatform(1, () {
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return 1;
+      case TargetPlatform.iOS:
+        return 1;
+      case TargetPlatform.macOS:
+        return 1;
+      case TargetPlatform.windows:
+        return 1;
+      default:
+        break;
+    }
+    return null;
+  });
 
   ///Uses the credentials stored for the current host.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Android native WebView
-  ///- iOS
-  ///- MacOS
-  static const USE_SAVED_HTTP_AUTH_CREDENTIALS =
-      HttpAuthResponseAction._internal(2, 2);
+  ///- Android WebView
+  ///- iOS WKWebView
+  ///- macOS WKWebView
+  static final USE_SAVED_HTTP_AUTH_CREDENTIALS =
+      HttpAuthResponseAction._internalMultiPlatform(2, () {
+        switch (defaultTargetPlatform) {
+          case TargetPlatform.android:
+            return 2;
+          case TargetPlatform.iOS:
+            return 2;
+          case TargetPlatform.macOS:
+            return 2;
+          default:
+            break;
+        }
+        return null;
+      });
 
   ///Set of all values of [HttpAuthResponseAction].
   static final Set<HttpAuthResponseAction> values = [
@@ -54,8 +95,9 @@ class HttpAuthResponseAction {
   static HttpAuthResponseAction? fromValue(int? value) {
     if (value != null) {
       try {
-        return HttpAuthResponseAction.values
-            .firstWhere((element) => element.toValue() == value);
+        return HttpAuthResponseAction.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -67,8 +109,9 @@ class HttpAuthResponseAction {
   static HttpAuthResponseAction? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return HttpAuthResponseAction.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return HttpAuthResponseAction.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -84,8 +127,9 @@ class HttpAuthResponseAction {
   static HttpAuthResponseAction? byName(String? name) {
     if (name != null) {
       try {
-        return HttpAuthResponseAction.values
-            .firstWhere((element) => element.name() == name);
+        return HttpAuthResponseAction.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -103,14 +147,14 @@ class HttpAuthResponseAction {
   /// them will be represented in the returned map.
   static Map<String, HttpAuthResponseAction> asNameMap() =>
       <String, HttpAuthResponseAction>{
-        for (final value in HttpAuthResponseAction.values) value.name(): value
+        for (final value in HttpAuthResponseAction.values) value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -130,6 +174,11 @@ class HttpAuthResponseAction {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

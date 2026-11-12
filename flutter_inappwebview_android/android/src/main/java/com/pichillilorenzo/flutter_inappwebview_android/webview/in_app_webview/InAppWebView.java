@@ -1019,7 +1019,7 @@ final public class InAppWebView extends InputAwareWebView implements InAppWebVie
     if (newSettingsMap.get("fixedFontFamily") != null && !customSettings.fixedFontFamily.equals(newCustomSettings.fixedFontFamily))
       settings.setFixedFontFamily(newCustomSettings.fixedFontFamily);
 
-    if (newSettingsMap.get("forceDark") != null && !customSettings.forceDark.equals(newCustomSettings.forceDark)) {
+    if (newSettingsMap.get("forceDark") != null && !Util.objEquals(customSettings.forceDark, newCustomSettings.forceDark)) {
       if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK))
         WebSettingsCompat.setForceDark(settings, newCustomSettings.forceDark);
       else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
@@ -1027,7 +1027,7 @@ final public class InAppWebView extends InputAwareWebView implements InAppWebVie
     }
 
     if (newSettingsMap.get("forceDarkStrategy") != null &&
-            !customSettings.forceDarkStrategy.equals(newCustomSettings.forceDarkStrategy) &&
+            !Util.objEquals(customSettings.forceDarkStrategy, newCustomSettings.forceDarkStrategy) &&
             WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
       try {
         // for some reason the setForceDarkStrategy method could throw a ClassCastException
@@ -1370,15 +1370,17 @@ final public class InAppWebView extends InputAwareWebView implements InAppWebVie
     int currentSize = currentList.getSize();
     int currentIndex = currentList.getCurrentIndex();
 
-    List<HashMap<String, String>> history = new ArrayList<HashMap<String, String>>();
+    List<HashMap<String, Object>> history = new ArrayList<HashMap<String, Object>>();
 
     for (int i = 0; i < currentSize; i++) {
       WebHistoryItem historyItem = currentList.getItemAtIndex(i);
-      HashMap<String, String> historyItemMap = new HashMap<>();
+      HashMap<String, Object> historyItemMap = new HashMap<>();
 
       historyItemMap.put("originalUrl", historyItem.getOriginalUrl());
       historyItemMap.put("title", historyItem.getTitle());
       historyItemMap.put("url", historyItem.getUrl());
+      historyItemMap.put("index", i);
+      historyItemMap.put("offset", i - currentIndex);
 
       history.add(historyItemMap);
     }

@@ -9,24 +9,31 @@ part of 'vertical_scrollbar_position.dart';
 ///Class used to configure the position of the vertical scroll bar.
 class VerticalScrollbarPosition {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const VerticalScrollbarPosition._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory VerticalScrollbarPosition._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      VerticalScrollbarPosition._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => VerticalScrollbarPosition._internal(value, nativeValue());
 
   ///Position the scroll bar at the default position as determined by the system.
-  static const SCROLLBAR_POSITION_DEFAULT =
-      VerticalScrollbarPosition._internal(0, 0);
+  static const SCROLLBAR_POSITION_DEFAULT = VerticalScrollbarPosition._internal(
+    0,
+    0,
+  );
 
   ///Position the scroll bar along the left edge.
-  static const SCROLLBAR_POSITION_LEFT =
-      VerticalScrollbarPosition._internal(1, 1);
+  static const SCROLLBAR_POSITION_LEFT = VerticalScrollbarPosition._internal(
+    1,
+    1,
+  );
 
   ///Position the scroll bar along the right edge.
-  static const SCROLLBAR_POSITION_RIGHT =
-      VerticalScrollbarPosition._internal(2, 2);
+  static const SCROLLBAR_POSITION_RIGHT = VerticalScrollbarPosition._internal(
+    2,
+    2,
+  );
 
   ///Set of all values of [VerticalScrollbarPosition].
   static final Set<VerticalScrollbarPosition> values = [
@@ -39,8 +46,9 @@ class VerticalScrollbarPosition {
   static VerticalScrollbarPosition? fromValue(int? value) {
     if (value != null) {
       try {
-        return VerticalScrollbarPosition.values
-            .firstWhere((element) => element.toValue() == value);
+        return VerticalScrollbarPosition.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -52,8 +60,9 @@ class VerticalScrollbarPosition {
   static VerticalScrollbarPosition? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return VerticalScrollbarPosition.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return VerticalScrollbarPosition.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -69,8 +78,9 @@ class VerticalScrollbarPosition {
   static VerticalScrollbarPosition? byName(String? name) {
     if (name != null) {
       try {
-        return VerticalScrollbarPosition.values
-            .firstWhere((element) => element.name() == name);
+        return VerticalScrollbarPosition.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -89,14 +99,14 @@ class VerticalScrollbarPosition {
   static Map<String, VerticalScrollbarPosition> asNameMap() =>
       <String, VerticalScrollbarPosition>{
         for (final value in VerticalScrollbarPosition.values)
-          value.name(): value
+          value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -117,6 +127,11 @@ class VerticalScrollbarPosition {
   @override
   bool operator ==(value) => value == _value;
 
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
+
   @override
   String toString() {
     return name();
@@ -128,13 +143,16 @@ class VerticalScrollbarPosition {
 @Deprecated('Use VerticalScrollbarPosition instead')
 class AndroidVerticalScrollbarPosition {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const AndroidVerticalScrollbarPosition._internal(
-      this._value, this._nativeValue);
-// ignore: unused_element
+    this._value,
+    this._nativeValue,
+  );
+  // ignore: unused_element
   factory AndroidVerticalScrollbarPosition._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      AndroidVerticalScrollbarPosition._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => AndroidVerticalScrollbarPosition._internal(value, nativeValue());
 
   ///Position the scroll bar at the default position as determined by the system.
   static const SCROLLBAR_POSITION_DEFAULT =
@@ -159,8 +177,9 @@ class AndroidVerticalScrollbarPosition {
   static AndroidVerticalScrollbarPosition? fromValue(int? value) {
     if (value != null) {
       try {
-        return AndroidVerticalScrollbarPosition.values
-            .firstWhere((element) => element.toValue() == value);
+        return AndroidVerticalScrollbarPosition.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -172,8 +191,9 @@ class AndroidVerticalScrollbarPosition {
   static AndroidVerticalScrollbarPosition? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return AndroidVerticalScrollbarPosition.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return AndroidVerticalScrollbarPosition.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -189,8 +209,9 @@ class AndroidVerticalScrollbarPosition {
   static AndroidVerticalScrollbarPosition? byName(String? name) {
     if (name != null) {
       try {
-        return AndroidVerticalScrollbarPosition.values
-            .firstWhere((element) => element.name() == name);
+        return AndroidVerticalScrollbarPosition.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -209,14 +230,14 @@ class AndroidVerticalScrollbarPosition {
   static Map<String, AndroidVerticalScrollbarPosition> asNameMap() =>
       <String, AndroidVerticalScrollbarPosition>{
         for (final value in AndroidVerticalScrollbarPosition.values)
-          value.name(): value
+          value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -236,6 +257,11 @@ class AndroidVerticalScrollbarPosition {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

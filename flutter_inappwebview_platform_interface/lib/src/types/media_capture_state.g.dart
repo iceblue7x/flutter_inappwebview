@@ -9,12 +9,13 @@ part of 'media_capture_state.dart';
 ///Class that describes whether a media device, like a camera or microphone, is currently capturing audio or video.
 class MediaCaptureState {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const MediaCaptureState._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory MediaCaptureState._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      MediaCaptureState._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => MediaCaptureState._internal(value, nativeValue());
 
   ///The media device is actively capturing audio or video.
   static const ACTIVE = MediaCaptureState._internal(1, 1);
@@ -36,8 +37,9 @@ class MediaCaptureState {
   static MediaCaptureState? fromValue(int? value) {
     if (value != null) {
       try {
-        return MediaCaptureState.values
-            .firstWhere((element) => element.toValue() == value);
+        return MediaCaptureState.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -49,8 +51,9 @@ class MediaCaptureState {
   static MediaCaptureState? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return MediaCaptureState.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return MediaCaptureState.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -66,8 +69,9 @@ class MediaCaptureState {
   static MediaCaptureState? byName(String? name) {
     if (name != null) {
       try {
-        return MediaCaptureState.values
-            .firstWhere((element) => element.name() == name);
+        return MediaCaptureState.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -85,14 +89,14 @@ class MediaCaptureState {
   /// them will be represented in the returned map.
   static Map<String, MediaCaptureState> asNameMap() =>
       <String, MediaCaptureState>{
-        for (final value in MediaCaptureState.values) value.name(): value
+        for (final value in MediaCaptureState.values) value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -112,6 +116,11 @@ class MediaCaptureState {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

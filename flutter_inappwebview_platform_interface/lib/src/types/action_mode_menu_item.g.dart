@@ -9,12 +9,13 @@ part of 'action_mode_menu_item.dart';
 ///Class used to disable the action mode menu items.
 class ActionModeMenuItem {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const ActionModeMenuItem._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory ActionModeMenuItem._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      ActionModeMenuItem._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => ActionModeMenuItem._internal(value, nativeValue());
 
   ///No menu items should be disabled.
   static const MENU_ITEM_NONE = ActionModeMenuItem._internal(0, 0);
@@ -40,8 +41,9 @@ class ActionModeMenuItem {
   static ActionModeMenuItem? fromValue(int? value) {
     if (value != null) {
       try {
-        return ActionModeMenuItem.values
-            .firstWhere((element) => element.toValue() == value);
+        return ActionModeMenuItem.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return ActionModeMenuItem._internal(value, value);
       }
@@ -53,10 +55,11 @@ class ActionModeMenuItem {
   static ActionModeMenuItem? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return ActionModeMenuItem.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return ActionModeMenuItem.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
-        return ActionModeMenuItem._internal(value, value);
+        return null;
       }
     }
     return null;
@@ -70,8 +73,9 @@ class ActionModeMenuItem {
   static ActionModeMenuItem? byName(String? name) {
     if (name != null) {
       try {
-        return ActionModeMenuItem.values
-            .firstWhere((element) => element.name() == name);
+        return ActionModeMenuItem.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -89,14 +93,14 @@ class ActionModeMenuItem {
   /// them will be represented in the returned map.
   static Map<String, ActionModeMenuItem> asNameMap() =>
       <String, ActionModeMenuItem>{
-        for (final value in ActionModeMenuItem.values) value.name(): value
+        for (final value in ActionModeMenuItem.values) value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -121,7 +125,17 @@ class ActionModeMenuItem {
 
   ActionModeMenuItem operator |(ActionModeMenuItem value) =>
       ActionModeMenuItem._internal(
-          value.toValue() | _value, value.toNativeValue() | _nativeValue);
+        value.toValue() | _value,
+        value.toNativeValue() != null && _nativeValue != null
+            ? value.toNativeValue()! | _nativeValue!
+            : null,
+      );
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
+
   @override
   String toString() {
     return name();
@@ -136,19 +150,22 @@ class ActionModeMenuItem {
 @Deprecated('Use ActionModeMenuItem instead')
 class AndroidActionModeMenuItem {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const AndroidActionModeMenuItem._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory AndroidActionModeMenuItem._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      AndroidActionModeMenuItem._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => AndroidActionModeMenuItem._internal(value, nativeValue());
 
   ///No menu items should be disabled.
   static const MENU_ITEM_NONE = AndroidActionModeMenuItem._internal(0, 0);
 
   ///Disable all the action mode menu items for text processing.
-  static const MENU_ITEM_PROCESS_TEXT =
-      AndroidActionModeMenuItem._internal(4, 4);
+  static const MENU_ITEM_PROCESS_TEXT = AndroidActionModeMenuItem._internal(
+    4,
+    4,
+  );
 
   ///Disable menu item "Share".
   static const MENU_ITEM_SHARE = AndroidActionModeMenuItem._internal(1, 1);
@@ -168,8 +185,9 @@ class AndroidActionModeMenuItem {
   static AndroidActionModeMenuItem? fromValue(int? value) {
     if (value != null) {
       try {
-        return AndroidActionModeMenuItem.values
-            .firstWhere((element) => element.toValue() == value);
+        return AndroidActionModeMenuItem.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return AndroidActionModeMenuItem._internal(value, value);
       }
@@ -181,10 +199,11 @@ class AndroidActionModeMenuItem {
   static AndroidActionModeMenuItem? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return AndroidActionModeMenuItem.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return AndroidActionModeMenuItem.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
-        return AndroidActionModeMenuItem._internal(value, value);
+        return null;
       }
     }
     return null;
@@ -198,8 +217,9 @@ class AndroidActionModeMenuItem {
   static AndroidActionModeMenuItem? byName(String? name) {
     if (name != null) {
       try {
-        return AndroidActionModeMenuItem.values
-            .firstWhere((element) => element.name() == name);
+        return AndroidActionModeMenuItem.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -218,14 +238,14 @@ class AndroidActionModeMenuItem {
   static Map<String, AndroidActionModeMenuItem> asNameMap() =>
       <String, AndroidActionModeMenuItem>{
         for (final value in AndroidActionModeMenuItem.values)
-          value.name(): value
+          value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -250,7 +270,17 @@ class AndroidActionModeMenuItem {
 
   AndroidActionModeMenuItem operator |(AndroidActionModeMenuItem value) =>
       AndroidActionModeMenuItem._internal(
-          value.toValue() | _value, value.toNativeValue() | _nativeValue);
+        value.toValue() | _value,
+        value.toNativeValue() != null && _nativeValue != null
+            ? value.toNativeValue()! | _nativeValue!
+            : null,
+      );
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
+
   @override
   String toString() {
     return name();

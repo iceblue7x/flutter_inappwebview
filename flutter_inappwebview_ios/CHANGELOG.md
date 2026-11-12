@@ -3,10 +3,15 @@
 - Updated flutter_inappwebview_platform_interface version to ^1.4.0-beta.3
 - Implemented `saveState`, `restoreState` InAppWebViewController methods
 - Implemented `PlatformProxyController` class
+- Add Swift Package Manager support [#2409](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2409)
 - Merged "Add proxy support for iOS" [#2362](https://github.com/pichillilorenzo/flutter_inappwebview/pull/2362) (thanks to [yerkejs](https://github.com/yerkejs))
 - Fixed "[iOS] Webview opened with windowId does not receive javascript handler callback." [#2393](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2393)
 - Fixed internal javascript callback handlers when the WebView has windowId not null
 - Fixed "When useShouldInterceptAjaxRequest is true, some ajax requests doesn't work" [#2197](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2197)
+- Fixed "iOS App rejected by apple for violating Guideline 2.5.1 - Performance - Software Requirements | Flutter 3.35.x seems to use non-public or deprecated APIs" [#2754](https://github.com/pichillilorenzo/flutter_inappwebview/issues/2754)
+- Fixed "InAppWebViewController.goTo" implementation
+- Merged "fix #2484, Remove not-empty assert for Cookie.value" [#2486](https://github.com/pichillilorenzo/flutter_inappwebview/pull/2486) (thanks to [laishere](https://github.com/laishere))
+- Merged "Fix gesture recognition delay prevention for latest Flutter versions" [#2538](https://github.com/pichillilorenzo/flutter_inappwebview/pull/2538) (thanks to [muccy-timeware](https://github.com/muccy-timeware))
 
 ## 1.2.0-beta.2
 

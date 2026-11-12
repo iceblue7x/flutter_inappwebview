@@ -9,17 +9,18 @@ part of 'focus_direction.dart';
 ///Class used to indicate the force dark mode.
 class FocusDirection {
   final String _value;
-  final dynamic _nativeValue;
+  final int? _nativeValue;
   const FocusDirection._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory FocusDirection._internalMultiPlatform(
-          String value, Function nativeValue) =>
-      FocusDirection._internal(value, nativeValue());
+    String value,
+    Function nativeValue,
+  ) => FocusDirection._internal(value, nativeValue());
 
   ///Move focus down.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Android native WebView ([Official API - FOCUS_DOWN](https://developer.android.com/reference/android/view/View#FOCUS_DOWN))
+  ///- Android WebView ([Official API - FOCUS_DOWN](https://developer.android.com/reference/android/view/View#FOCUS_DOWN))
   static final DOWN = FocusDirection._internalMultiPlatform('DOWN', () {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -33,7 +34,7 @@ class FocusDirection {
   ///Move focus to the left.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Android native WebView ([Official API - FOCUS_LEFT](https://developer.android.com/reference/android/view/View#FOCUS_LEFT))
+  ///- Android WebView ([Official API - FOCUS_LEFT](https://developer.android.com/reference/android/view/View#FOCUS_LEFT))
   static final LEFT = FocusDirection._internalMultiPlatform('LEFT', () {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -47,7 +48,7 @@ class FocusDirection {
   ///Move focus to the right.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Android native WebView ([Official API - FOCUS_RIGHT](https://developer.android.com/reference/android/view/View#FOCUS_RIGHT))
+  ///- Android WebView ([Official API - FOCUS_RIGHT](https://developer.android.com/reference/android/view/View#FOCUS_RIGHT))
   static final RIGHT = FocusDirection._internalMultiPlatform('RIGHT', () {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -61,7 +62,7 @@ class FocusDirection {
   ///Move focus up.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Android native WebView ([Official API - FOCUS_UP](https://developer.android.com/reference/android/view/View#FOCUS_UP))
+  ///- Android WebView ([Official API - FOCUS_UP](https://developer.android.com/reference/android/view/View#FOCUS_UP))
   static final UP = FocusDirection._internalMultiPlatform('UP', () {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -84,8 +85,9 @@ class FocusDirection {
   static FocusDirection? fromValue(String? value) {
     if (value != null) {
       try {
-        return FocusDirection.values
-            .firstWhere((element) => element.toValue() == value);
+        return FocusDirection.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -94,11 +96,12 @@ class FocusDirection {
   }
 
   ///Gets a possible [FocusDirection] instance from a native value.
-  static FocusDirection? fromNativeValue(dynamic value) {
+  static FocusDirection? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return FocusDirection.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return FocusDirection.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -114,8 +117,9 @@ class FocusDirection {
   static FocusDirection? byName(String? name) {
     if (name != null) {
       try {
-        return FocusDirection.values
-            .firstWhere((element) => element.name() == name);
+        return FocusDirection.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -132,14 +136,14 @@ class FocusDirection {
   /// same value, or being values of different enum type), at most one of
   /// them will be represented in the returned map.
   static Map<String, FocusDirection> asNameMap() => <String, FocusDirection>{
-        for (final value in FocusDirection.values) value.name(): value
-      };
+    for (final value in FocusDirection.values) value.name(): value,
+  };
 
   ///Gets [String] value.
   String toValue() => _value;
 
-  ///Gets [dynamic] native value.
-  dynamic toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -161,6 +165,11 @@ class FocusDirection {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

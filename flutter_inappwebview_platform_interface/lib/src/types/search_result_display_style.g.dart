@@ -9,12 +9,13 @@ part of 'search_result_display_style.dart';
 ///Constants that describe the results summary the find panel UI includes.
 class SearchResultDisplayStyle {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const SearchResultDisplayStyle._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory SearchResultDisplayStyle._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      SearchResultDisplayStyle._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => SearchResultDisplayStyle._internal(value, nativeValue());
 
   ///The find panel includes the total number of results the session reports and the index of the target result.
   static const CURRENT_AND_TOTAL = SearchResultDisplayStyle._internal(0, 0);
@@ -36,8 +37,9 @@ class SearchResultDisplayStyle {
   static SearchResultDisplayStyle? fromValue(int? value) {
     if (value != null) {
       try {
-        return SearchResultDisplayStyle.values
-            .firstWhere((element) => element.toValue() == value);
+        return SearchResultDisplayStyle.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -49,8 +51,9 @@ class SearchResultDisplayStyle {
   static SearchResultDisplayStyle? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return SearchResultDisplayStyle.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return SearchResultDisplayStyle.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -66,8 +69,9 @@ class SearchResultDisplayStyle {
   static SearchResultDisplayStyle? byName(String? name) {
     if (name != null) {
       try {
-        return SearchResultDisplayStyle.values
-            .firstWhere((element) => element.name() == name);
+        return SearchResultDisplayStyle.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -85,14 +89,15 @@ class SearchResultDisplayStyle {
   /// them will be represented in the returned map.
   static Map<String, SearchResultDisplayStyle> asNameMap() =>
       <String, SearchResultDisplayStyle>{
-        for (final value in SearchResultDisplayStyle.values) value.name(): value
+        for (final value in SearchResultDisplayStyle.values)
+          value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -112,6 +117,11 @@ class SearchResultDisplayStyle {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

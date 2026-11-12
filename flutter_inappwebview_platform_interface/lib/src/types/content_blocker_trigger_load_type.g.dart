@@ -9,20 +9,25 @@ part of 'content_blocker_trigger_load_type.dart';
 ///Class that represents the possible load type for a [ContentBlockerTrigger].
 class ContentBlockerTriggerLoadType {
   final String _value;
-  final String _nativeValue;
+  final String? _nativeValue;
   const ContentBlockerTriggerLoadType._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory ContentBlockerTriggerLoadType._internalMultiPlatform(
-          String value, Function nativeValue) =>
-      ContentBlockerTriggerLoadType._internal(value, nativeValue());
+    String value,
+    Function nativeValue,
+  ) => ContentBlockerTriggerLoadType._internal(value, nativeValue());
 
   ///FIRST_PARTY is triggered only if the resource has the same scheme, domain, and port as the main page resource.
-  static const FIRST_PARTY =
-      ContentBlockerTriggerLoadType._internal('first-party', 'first-party');
+  static const FIRST_PARTY = ContentBlockerTriggerLoadType._internal(
+    'first-party',
+    'first-party',
+  );
 
   ///THIRD_PARTY is triggered if the resource is not from the same domain as the main page resource.
-  static const THIRD_PARTY =
-      ContentBlockerTriggerLoadType._internal('third-party', 'third-party');
+  static const THIRD_PARTY = ContentBlockerTriggerLoadType._internal(
+    'third-party',
+    'third-party',
+  );
 
   ///Set of all values of [ContentBlockerTriggerLoadType].
   static final Set<ContentBlockerTriggerLoadType> values = [
@@ -34,8 +39,9 @@ class ContentBlockerTriggerLoadType {
   static ContentBlockerTriggerLoadType? fromValue(String? value) {
     if (value != null) {
       try {
-        return ContentBlockerTriggerLoadType.values
-            .firstWhere((element) => element.toValue() == value);
+        return ContentBlockerTriggerLoadType.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -47,8 +53,9 @@ class ContentBlockerTriggerLoadType {
   static ContentBlockerTriggerLoadType? fromNativeValue(String? value) {
     if (value != null) {
       try {
-        return ContentBlockerTriggerLoadType.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return ContentBlockerTriggerLoadType.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -64,8 +71,9 @@ class ContentBlockerTriggerLoadType {
   static ContentBlockerTriggerLoadType? byName(String? name) {
     if (name != null) {
       try {
-        return ContentBlockerTriggerLoadType.values
-            .firstWhere((element) => element.name() == name);
+        return ContentBlockerTriggerLoadType.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -84,14 +92,14 @@ class ContentBlockerTriggerLoadType {
   static Map<String, ContentBlockerTriggerLoadType> asNameMap() =>
       <String, ContentBlockerTriggerLoadType>{
         for (final value in ContentBlockerTriggerLoadType.values)
-          value.name(): value
+          value.name(): value,
       };
 
   ///Gets [String] value.
   String toValue() => _value;
 
-  ///Gets [String] native value.
-  String toNativeValue() => _nativeValue;
+  ///Gets [String] native value if supported by the current platform, otherwise `null`.
+  String? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -109,6 +117,11 @@ class ContentBlockerTriggerLoadType {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

@@ -9,12 +9,13 @@ part of 'layout_in_display_cutout_mode.dart';
 ///Class representing the share state that should be applied to the custom tab.
 class LayoutInDisplayCutoutMode {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const LayoutInDisplayCutoutMode._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory LayoutInDisplayCutoutMode._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      LayoutInDisplayCutoutMode._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => LayoutInDisplayCutoutMode._internal(value, nativeValue());
 
   ///The window is always allowed to extend into the DisplayCutout areas on the all edges of the screen.
   ///
@@ -48,8 +49,9 @@ class LayoutInDisplayCutoutMode {
   static LayoutInDisplayCutoutMode? fromValue(int? value) {
     if (value != null) {
       try {
-        return LayoutInDisplayCutoutMode.values
-            .firstWhere((element) => element.toValue() == value);
+        return LayoutInDisplayCutoutMode.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -61,8 +63,9 @@ class LayoutInDisplayCutoutMode {
   static LayoutInDisplayCutoutMode? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return LayoutInDisplayCutoutMode.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return LayoutInDisplayCutoutMode.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -78,8 +81,9 @@ class LayoutInDisplayCutoutMode {
   static LayoutInDisplayCutoutMode? byName(String? name) {
     if (name != null) {
       try {
-        return LayoutInDisplayCutoutMode.values
-            .firstWhere((element) => element.name() == name);
+        return LayoutInDisplayCutoutMode.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -98,14 +102,14 @@ class LayoutInDisplayCutoutMode {
   static Map<String, LayoutInDisplayCutoutMode> asNameMap() =>
       <String, LayoutInDisplayCutoutMode>{
         for (final value in LayoutInDisplayCutoutMode.values)
-          value.name(): value
+          value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -128,6 +132,11 @@ class LayoutInDisplayCutoutMode {
   @override
   bool operator ==(value) => value == _value;
 
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
+
   @override
   String toString() {
     return name();
@@ -142,13 +151,16 @@ class LayoutInDisplayCutoutMode {
 @Deprecated('Use LayoutInDisplayCutoutMode instead')
 class AndroidLayoutInDisplayCutoutMode {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const AndroidLayoutInDisplayCutoutMode._internal(
-      this._value, this._nativeValue);
-// ignore: unused_element
+    this._value,
+    this._nativeValue,
+  );
+  // ignore: unused_element
   factory AndroidLayoutInDisplayCutoutMode._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      AndroidLayoutInDisplayCutoutMode._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => AndroidLayoutInDisplayCutoutMode._internal(value, nativeValue());
 
   ///The window is always allowed to extend into the DisplayCutout areas on the all edges of the screen.
   ///
@@ -182,8 +194,9 @@ class AndroidLayoutInDisplayCutoutMode {
   static AndroidLayoutInDisplayCutoutMode? fromValue(int? value) {
     if (value != null) {
       try {
-        return AndroidLayoutInDisplayCutoutMode.values
-            .firstWhere((element) => element.toValue() == value);
+        return AndroidLayoutInDisplayCutoutMode.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -195,8 +208,9 @@ class AndroidLayoutInDisplayCutoutMode {
   static AndroidLayoutInDisplayCutoutMode? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return AndroidLayoutInDisplayCutoutMode.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return AndroidLayoutInDisplayCutoutMode.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -212,8 +226,9 @@ class AndroidLayoutInDisplayCutoutMode {
   static AndroidLayoutInDisplayCutoutMode? byName(String? name) {
     if (name != null) {
       try {
-        return AndroidLayoutInDisplayCutoutMode.values
-            .firstWhere((element) => element.name() == name);
+        return AndroidLayoutInDisplayCutoutMode.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -232,14 +247,14 @@ class AndroidLayoutInDisplayCutoutMode {
   static Map<String, AndroidLayoutInDisplayCutoutMode> asNameMap() =>
       <String, AndroidLayoutInDisplayCutoutMode>{
         for (final value in AndroidLayoutInDisplayCutoutMode.values)
-          value.name(): value
+          value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -261,6 +276,11 @@ class AndroidLayoutInDisplayCutoutMode {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

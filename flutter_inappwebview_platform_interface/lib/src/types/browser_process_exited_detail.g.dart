@@ -11,28 +11,31 @@ class BrowserProcessExitedDetail {
   ///The kind of browser process exit that has occurred.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   BrowserProcessExitKind kind;
 
   ///The process ID of the browser process that has exited.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   int? processId;
   BrowserProcessExitedDetail({required this.kind, this.processId});
 
   ///Gets a possible [BrowserProcessExitedDetail] instance from a [Map] value.
-  static BrowserProcessExitedDetail? fromMap(Map<String, dynamic>? map,
-      {EnumMethod? enumMethod}) {
+  static BrowserProcessExitedDetail? fromMap(
+    Map<String, dynamic>? map, {
+    EnumMethod? enumMethod,
+  }) {
     if (map == null) {
       return null;
     }
     final instance = BrowserProcessExitedDetail(
       kind: switch (enumMethod ?? EnumMethod.nativeValue) {
-        EnumMethod.nativeValue =>
-          BrowserProcessExitKind.fromNativeValue(map['kind']),
+        EnumMethod.nativeValue => BrowserProcessExitKind.fromNativeValue(
+          map['kind'],
+        ),
         EnumMethod.value => BrowserProcessExitKind.fromValue(map['kind']),
-        EnumMethod.name => BrowserProcessExitKind.byName(map['kind'])
+        EnumMethod.name => BrowserProcessExitKind.byName(map['kind']),
       }!,
       processId: map['processId'],
     );
@@ -45,7 +48,7 @@ class BrowserProcessExitedDetail {
       "kind": switch (enumMethod ?? EnumMethod.nativeValue) {
         EnumMethod.nativeValue => kind.toNativeValue(),
         EnumMethod.value => kind.toValue(),
-        EnumMethod.name => kind.name()
+        EnumMethod.name => kind.name(),
       },
       "processId": processId,
     };

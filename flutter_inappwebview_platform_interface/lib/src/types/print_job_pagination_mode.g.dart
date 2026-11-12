@@ -11,30 +11,33 @@ class PrintJobPaginationMode {
   final String _value;
   final int? _nativeValue;
   const PrintJobPaginationMode._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory PrintJobPaginationMode._internalMultiPlatform(
-          String value, Function nativeValue) =>
-      PrintJobPaginationMode._internal(value, nativeValue());
+    String value,
+    Function nativeValue,
+  ) => PrintJobPaginationMode._internal(value, nativeValue());
 
   ///
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- MacOS
-  static final AUTOMATIC =
-      PrintJobPaginationMode._internalMultiPlatform('AUTOMATIC', () {
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.macOS:
-        return 0;
-      default:
-        break;
-    }
-    return null;
-  });
+  ///- macOS WKWebView
+  static final AUTOMATIC = PrintJobPaginationMode._internalMultiPlatform(
+    'AUTOMATIC',
+    () {
+      switch (defaultTargetPlatform) {
+        case TargetPlatform.macOS:
+          return 0;
+        default:
+          break;
+      }
+      return null;
+    },
+  );
 
   ///
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- MacOS
+  ///- macOS WKWebView
   static final CLIP = PrintJobPaginationMode._internalMultiPlatform('CLIP', () {
     switch (defaultTargetPlatform) {
       case TargetPlatform.macOS:
@@ -48,7 +51,7 @@ class PrintJobPaginationMode {
   ///
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- MacOS
+  ///- macOS WKWebView
   static final FIT = PrintJobPaginationMode._internalMultiPlatform('FIT', () {
     switch (defaultTargetPlatform) {
       case TargetPlatform.macOS:
@@ -70,8 +73,9 @@ class PrintJobPaginationMode {
   static PrintJobPaginationMode? fromValue(String? value) {
     if (value != null) {
       try {
-        return PrintJobPaginationMode.values
-            .firstWhere((element) => element.toValue() == value);
+        return PrintJobPaginationMode.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -83,8 +87,9 @@ class PrintJobPaginationMode {
   static PrintJobPaginationMode? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return PrintJobPaginationMode.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return PrintJobPaginationMode.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -100,8 +105,9 @@ class PrintJobPaginationMode {
   static PrintJobPaginationMode? byName(String? name) {
     if (name != null) {
       try {
-        return PrintJobPaginationMode.values
-            .firstWhere((element) => element.name() == name);
+        return PrintJobPaginationMode.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -119,13 +125,13 @@ class PrintJobPaginationMode {
   /// them will be represented in the returned map.
   static Map<String, PrintJobPaginationMode> asNameMap() =>
       <String, PrintJobPaginationMode>{
-        for (final value in PrintJobPaginationMode.values) value.name(): value
+        for (final value in PrintJobPaginationMode.values) value.name(): value,
       };
 
   ///Gets [String] value.
   String toValue() => _value;
 
-  ///Gets [int?] native value.
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
   int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
@@ -146,6 +152,11 @@ class PrintJobPaginationMode {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

@@ -13,7 +13,7 @@ class ProcessFailedDetail {
   ///The exit code is always STILL_ACTIVE (259) when [ProcessFailedKind.RENDER_PROCESS_UNRESPONSIVE].
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   int? exitCode;
 
   ///This property is the full path of the module that caused the crash in cases of Windows Code Integrity failures.
@@ -28,7 +28,7 @@ class ProcessFailedDetail {
   ///- It has been blocked by an administrator or a security policy. This property always will be the empty string if failure is not caused by STATUS_INVALID_IMAGE_HASH.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   String? failureSourceModulePath;
 
   ///The collection of [FrameInfo]s for frames in the WebView that were being rendered by the failed process.
@@ -39,13 +39,13 @@ class ProcessFailedDetail {
   ///for the main frame and subframes within it, for which the failure kind is [ProcessFailedKind.RENDER_PROCESS_EXITED].
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   List<FrameInfo>? frameInfos;
 
   ///The kind of process failure that has occurred.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   ProcessFailedKind kind;
 
   ///Description of the process assigned by the WebView2 Runtime.
@@ -55,25 +55,28 @@ class ProcessFailedDetail {
   ///The returned [processDescription] is empty if the WebView2 Runtime did not assign a description to the process.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   String? processDescription;
 
   ///The reason for the process failure.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   ProcessFailedReason? reason;
-  ProcessFailedDetail(
-      {this.exitCode,
-      this.failureSourceModulePath,
-      this.frameInfos,
-      required this.kind,
-      this.processDescription,
-      this.reason});
+  ProcessFailedDetail({
+    this.exitCode,
+    this.failureSourceModulePath,
+    this.frameInfos,
+    required this.kind,
+    this.processDescription,
+    this.reason,
+  });
 
   ///Gets a possible [ProcessFailedDetail] instance from a [Map] value.
-  static ProcessFailedDetail? fromMap(Map<String, dynamic>? map,
-      {EnumMethod? enumMethod}) {
+  static ProcessFailedDetail? fromMap(
+    Map<String, dynamic>? map, {
+    EnumMethod? enumMethod,
+  }) {
     if (map == null) {
       return null;
     }
@@ -81,22 +84,29 @@ class ProcessFailedDetail {
       exitCode: map['exitCode'],
       failureSourceModulePath: map['failureSourceModulePath'],
       frameInfos: map['frameInfos'] != null
-          ? List<FrameInfo>.from(map['frameInfos'].map((e) => FrameInfo.fromMap(
-              e?.cast<String, dynamic>(),
-              enumMethod: enumMethod)!))
+          ? List<FrameInfo>.from(
+              map['frameInfos'].map(
+                (e) => FrameInfo.fromMap(
+                  e?.cast<String, dynamic>(),
+                  enumMethod: enumMethod,
+                )!,
+              ),
+            )
           : null,
       kind: switch (enumMethod ?? EnumMethod.nativeValue) {
-        EnumMethod.nativeValue =>
-          ProcessFailedKind.fromNativeValue(map['kind']),
+        EnumMethod.nativeValue => ProcessFailedKind.fromNativeValue(
+          map['kind'],
+        ),
         EnumMethod.value => ProcessFailedKind.fromValue(map['kind']),
-        EnumMethod.name => ProcessFailedKind.byName(map['kind'])
+        EnumMethod.name => ProcessFailedKind.byName(map['kind']),
       }!,
       processDescription: map['processDescription'],
       reason: switch (enumMethod ?? EnumMethod.nativeValue) {
-        EnumMethod.nativeValue =>
-          ProcessFailedReason.fromNativeValue(map['reason']),
+        EnumMethod.nativeValue => ProcessFailedReason.fromNativeValue(
+          map['reason'],
+        ),
         EnumMethod.value => ProcessFailedReason.fromValue(map['reason']),
-        EnumMethod.name => ProcessFailedReason.byName(map['reason'])
+        EnumMethod.name => ProcessFailedReason.byName(map['reason']),
       },
     );
     return instance;
@@ -107,18 +117,19 @@ class ProcessFailedDetail {
     return {
       "exitCode": exitCode,
       "failureSourceModulePath": failureSourceModulePath,
-      "frameInfos":
-          frameInfos?.map((e) => e.toMap(enumMethod: enumMethod)).toList(),
+      "frameInfos": frameInfos
+          ?.map((e) => e.toMap(enumMethod: enumMethod))
+          .toList(),
       "kind": switch (enumMethod ?? EnumMethod.nativeValue) {
         EnumMethod.nativeValue => kind.toNativeValue(),
         EnumMethod.value => kind.toValue(),
-        EnumMethod.name => kind.name()
+        EnumMethod.name => kind.name(),
       },
       "processDescription": processDescription,
       "reason": switch (enumMethod ?? EnumMethod.nativeValue) {
         EnumMethod.nativeValue => reason?.toNativeValue(),
         EnumMethod.value => reason?.toValue(),
-        EnumMethod.name => reason?.name()
+        EnumMethod.name => reason?.name(),
       },
     };
   }
