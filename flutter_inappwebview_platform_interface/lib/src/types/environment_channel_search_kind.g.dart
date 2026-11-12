@@ -10,42 +10,43 @@ part of 'environment_channel_search_kind.dart';
 ///channels are searched for during [PlatformWebViewEnvironment] creation.
 class EnvironmentChannelSearchKind {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const EnvironmentChannelSearchKind._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory EnvironmentChannelSearchKind._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      EnvironmentChannelSearchKind._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => EnvironmentChannelSearchKind._internal(value, nativeValue());
 
   ///Search for a release channel from least to most stable: Canary -> Dev -> Beta -> WebView2 Runtime.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   static final LEAST_STABLE =
       EnvironmentChannelSearchKind._internalMultiPlatform(1, () {
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.windows:
-        return 1;
-      default:
-        break;
-    }
-    return null;
-  });
+        switch (defaultTargetPlatform) {
+          case TargetPlatform.windows:
+            return 1;
+          default:
+            break;
+        }
+        return null;
+      });
 
   ///Search for a release channel from most to least stable: WebView2 Runtime -> Beta -> Dev -> Canary. This is the default behavior.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   static final MOST_STABLE =
       EnvironmentChannelSearchKind._internalMultiPlatform(0, () {
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.windows:
-        return 0;
-      default:
-        break;
-    }
-    return null;
-  });
+        switch (defaultTargetPlatform) {
+          case TargetPlatform.windows:
+            return 0;
+          default:
+            break;
+        }
+        return null;
+      });
 
   ///Set of all values of [EnvironmentChannelSearchKind].
   static final Set<EnvironmentChannelSearchKind> values = [
@@ -57,8 +58,9 @@ class EnvironmentChannelSearchKind {
   static EnvironmentChannelSearchKind? fromValue(int? value) {
     if (value != null) {
       try {
-        return EnvironmentChannelSearchKind.values
-            .firstWhere((element) => element.toValue() == value);
+        return EnvironmentChannelSearchKind.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -70,8 +72,9 @@ class EnvironmentChannelSearchKind {
   static EnvironmentChannelSearchKind? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return EnvironmentChannelSearchKind.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return EnvironmentChannelSearchKind.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -87,8 +90,9 @@ class EnvironmentChannelSearchKind {
   static EnvironmentChannelSearchKind? byName(String? name) {
     if (name != null) {
       try {
-        return EnvironmentChannelSearchKind.values
-            .firstWhere((element) => element.name() == name);
+        return EnvironmentChannelSearchKind.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -107,14 +111,14 @@ class EnvironmentChannelSearchKind {
   static Map<String, EnvironmentChannelSearchKind> asNameMap() =>
       <String, EnvironmentChannelSearchKind>{
         for (final value in EnvironmentChannelSearchKind.values)
-          value.name(): value
+          value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -132,6 +136,11 @@ class EnvironmentChannelSearchKind {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

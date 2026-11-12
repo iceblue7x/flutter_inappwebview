@@ -9,21 +9,28 @@ part of 'content_blocker_trigger_load_context.dart';
 ///Class that represents the kind of load context that can be used with a [ContentBlockerTrigger].
 class ContentBlockerTriggerLoadContext {
   final String _value;
-  final String _nativeValue;
+  final String? _nativeValue;
   const ContentBlockerTriggerLoadContext._internal(
-      this._value, this._nativeValue);
-// ignore: unused_element
+    this._value,
+    this._nativeValue,
+  );
+  // ignore: unused_element
   factory ContentBlockerTriggerLoadContext._internalMultiPlatform(
-          String value, Function nativeValue) =>
-      ContentBlockerTriggerLoadContext._internal(value, nativeValue());
+    String value,
+    Function nativeValue,
+  ) => ContentBlockerTriggerLoadContext._internal(value, nativeValue());
 
   ///Child frame load context
-  static const CHILD_FRAME =
-      ContentBlockerTriggerLoadContext._internal('child-frame', 'child-frame');
+  static const CHILD_FRAME = ContentBlockerTriggerLoadContext._internal(
+    'child-frame',
+    'child-frame',
+  );
 
   ///Top frame load context
-  static const TOP_FRAME =
-      ContentBlockerTriggerLoadContext._internal('top-frame', 'top-frame');
+  static const TOP_FRAME = ContentBlockerTriggerLoadContext._internal(
+    'top-frame',
+    'top-frame',
+  );
 
   ///Set of all values of [ContentBlockerTriggerLoadContext].
   static final Set<ContentBlockerTriggerLoadContext> values = [
@@ -35,8 +42,9 @@ class ContentBlockerTriggerLoadContext {
   static ContentBlockerTriggerLoadContext? fromValue(String? value) {
     if (value != null) {
       try {
-        return ContentBlockerTriggerLoadContext.values
-            .firstWhere((element) => element.toValue() == value);
+        return ContentBlockerTriggerLoadContext.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -48,8 +56,9 @@ class ContentBlockerTriggerLoadContext {
   static ContentBlockerTriggerLoadContext? fromNativeValue(String? value) {
     if (value != null) {
       try {
-        return ContentBlockerTriggerLoadContext.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return ContentBlockerTriggerLoadContext.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -65,8 +74,9 @@ class ContentBlockerTriggerLoadContext {
   static ContentBlockerTriggerLoadContext? byName(String? name) {
     if (name != null) {
       try {
-        return ContentBlockerTriggerLoadContext.values
-            .firstWhere((element) => element.name() == name);
+        return ContentBlockerTriggerLoadContext.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -85,14 +95,14 @@ class ContentBlockerTriggerLoadContext {
   static Map<String, ContentBlockerTriggerLoadContext> asNameMap() =>
       <String, ContentBlockerTriggerLoadContext>{
         for (final value in ContentBlockerTriggerLoadContext.values)
-          value.name(): value
+          value.name(): value,
       };
 
   ///Gets [String] value.
   String toValue() => _value;
 
-  ///Gets [String] native value.
-  String toNativeValue() => _nativeValue;
+  ///Gets [String] native value if supported by the current platform, otherwise `null`.
+  String? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -110,6 +120,11 @@ class ContentBlockerTriggerLoadContext {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

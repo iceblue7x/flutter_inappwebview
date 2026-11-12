@@ -9,47 +9,52 @@ part of 'print_job_disposition.dart';
 ///Class representing the constants that specify values for the print job disposition of a [PlatformPrintJobController].
 class PrintJobDisposition {
   final String _value;
-  final String _nativeValue;
+  final String? _nativeValue;
   const PrintJobDisposition._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory PrintJobDisposition._internalMultiPlatform(
-          String value, Function nativeValue) =>
-      PrintJobDisposition._internal(value, nativeValue());
+    String value,
+    Function nativeValue,
+  ) => PrintJobDisposition._internal(value, nativeValue());
 
   ///Cancel print job.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- MacOS
-  static final CANCEL =
-      PrintJobDisposition._internalMultiPlatform('CANCEL', () {
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.macOS:
-        return 'cancel';
-      default:
-        break;
-    }
-    return null;
-  });
+  ///- macOS WKWebView
+  static final CANCEL = PrintJobDisposition._internalMultiPlatform(
+    'CANCEL',
+    () {
+      switch (defaultTargetPlatform) {
+        case TargetPlatform.macOS:
+          return 'cancel';
+        default:
+          break;
+      }
+      return null;
+    },
+  );
 
   ///Send to Preview application.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- MacOS
-  static final PREVIEW =
-      PrintJobDisposition._internalMultiPlatform('PREVIEW', () {
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.macOS:
-        return 'preview';
-      default:
-        break;
-    }
-    return null;
-  });
+  ///- macOS WKWebView
+  static final PREVIEW = PrintJobDisposition._internalMultiPlatform(
+    'PREVIEW',
+    () {
+      switch (defaultTargetPlatform) {
+        case TargetPlatform.macOS:
+          return 'preview';
+        default:
+          break;
+      }
+      return null;
+    },
+  );
 
   ///Save to a file.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- MacOS
+  ///- macOS WKWebView
   static final SAVE = PrintJobDisposition._internalMultiPlatform('SAVE', () {
     switch (defaultTargetPlatform) {
       case TargetPlatform.macOS:
@@ -63,7 +68,7 @@ class PrintJobDisposition {
   ///Normal print job.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- MacOS
+  ///- macOS WKWebView
   static final SPOOL = PrintJobDisposition._internalMultiPlatform('SPOOL', () {
     switch (defaultTargetPlatform) {
       case TargetPlatform.macOS:
@@ -86,8 +91,9 @@ class PrintJobDisposition {
   static PrintJobDisposition? fromValue(String? value) {
     if (value != null) {
       try {
-        return PrintJobDisposition.values
-            .firstWhere((element) => element.toValue() == value);
+        return PrintJobDisposition.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -99,8 +105,9 @@ class PrintJobDisposition {
   static PrintJobDisposition? fromNativeValue(String? value) {
     if (value != null) {
       try {
-        return PrintJobDisposition.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return PrintJobDisposition.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -116,8 +123,9 @@ class PrintJobDisposition {
   static PrintJobDisposition? byName(String? name) {
     if (name != null) {
       try {
-        return PrintJobDisposition.values
-            .firstWhere((element) => element.name() == name);
+        return PrintJobDisposition.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -135,14 +143,14 @@ class PrintJobDisposition {
   /// them will be represented in the returned map.
   static Map<String, PrintJobDisposition> asNameMap() =>
       <String, PrintJobDisposition>{
-        for (final value in PrintJobDisposition.values) value.name(): value
+        for (final value in PrintJobDisposition.values) value.name(): value,
       };
 
   ///Gets [String] value.
   String toValue() => _value;
 
-  ///Gets [String] native value.
-  String toNativeValue() => _nativeValue;
+  ///Gets [String] native value if supported by the current platform, otherwise `null`.
+  String? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -164,6 +172,11 @@ class PrintJobDisposition {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

@@ -9,16 +9,19 @@ part of 'layout_algorithm.dart';
 ///Class used to set the underlying layout algorithm.
 class LayoutAlgorithm {
   final String _value;
-  final String _nativeValue;
+  final String? _nativeValue;
   const LayoutAlgorithm._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory LayoutAlgorithm._internalMultiPlatform(
-          String value, Function nativeValue) =>
-      LayoutAlgorithm._internal(value, nativeValue());
+    String value,
+    Function nativeValue,
+  ) => LayoutAlgorithm._internal(value, nativeValue());
 
   ///NARROW_COLUMNS makes all columns no wider than the screen if possible. Only use this for API levels prior to `Build.VERSION_CODES.KITKAT`.
-  static const NARROW_COLUMNS =
-      LayoutAlgorithm._internal('NARROW_COLUMNS', 'NARROW_COLUMNS');
+  static const NARROW_COLUMNS = LayoutAlgorithm._internal(
+    'NARROW_COLUMNS',
+    'NARROW_COLUMNS',
+  );
 
   ///NORMAL means no rendering changes. This is the recommended choice for maximum compatibility across different platforms and Android versions.
   static const NORMAL = LayoutAlgorithm._internal('NORMAL', 'NORMAL');
@@ -27,8 +30,10 @@ class LayoutAlgorithm {
   ///It is recommended to enable zoom support [InAppWebViewSettings.supportZoom] when using this mode.
   ///
   ///**NOTE**: available on Android 19+.
-  static const TEXT_AUTOSIZING =
-      LayoutAlgorithm._internal('TEXT_AUTOSIZING', 'TEXT_AUTOSIZING');
+  static const TEXT_AUTOSIZING = LayoutAlgorithm._internal(
+    'TEXT_AUTOSIZING',
+    'TEXT_AUTOSIZING',
+  );
 
   ///Set of all values of [LayoutAlgorithm].
   static final Set<LayoutAlgorithm> values = [
@@ -41,8 +46,9 @@ class LayoutAlgorithm {
   static LayoutAlgorithm? fromValue(String? value) {
     if (value != null) {
       try {
-        return LayoutAlgorithm.values
-            .firstWhere((element) => element.toValue() == value);
+        return LayoutAlgorithm.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -54,8 +60,9 @@ class LayoutAlgorithm {
   static LayoutAlgorithm? fromNativeValue(String? value) {
     if (value != null) {
       try {
-        return LayoutAlgorithm.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return LayoutAlgorithm.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -71,8 +78,9 @@ class LayoutAlgorithm {
   static LayoutAlgorithm? byName(String? name) {
     if (name != null) {
       try {
-        return LayoutAlgorithm.values
-            .firstWhere((element) => element.name() == name);
+        return LayoutAlgorithm.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -89,14 +97,14 @@ class LayoutAlgorithm {
   /// same value, or being values of different enum type), at most one of
   /// them will be represented in the returned map.
   static Map<String, LayoutAlgorithm> asNameMap() => <String, LayoutAlgorithm>{
-        for (final value in LayoutAlgorithm.values) value.name(): value
-      };
+    for (final value in LayoutAlgorithm.values) value.name(): value,
+  };
 
   ///Gets [String] value.
   String toValue() => _value;
 
-  ///Gets [String] native value.
-  String toNativeValue() => _nativeValue;
+  ///Gets [String] native value if supported by the current platform, otherwise `null`.
+  String? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -117,6 +125,11 @@ class LayoutAlgorithm {
   @override
   bool operator ==(value) => value == _value;
 
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
+
   @override
   String toString() {
     return _value;
@@ -128,16 +141,19 @@ class LayoutAlgorithm {
 @Deprecated('Use LayoutAlgorithm instead')
 class AndroidLayoutAlgorithm {
   final String _value;
-  final String _nativeValue;
+  final String? _nativeValue;
   const AndroidLayoutAlgorithm._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory AndroidLayoutAlgorithm._internalMultiPlatform(
-          String value, Function nativeValue) =>
-      AndroidLayoutAlgorithm._internal(value, nativeValue());
+    String value,
+    Function nativeValue,
+  ) => AndroidLayoutAlgorithm._internal(value, nativeValue());
 
   ///NARROW_COLUMNS makes all columns no wider than the screen if possible. Only use this for API levels prior to `Build.VERSION_CODES.KITKAT`.
-  static const NARROW_COLUMNS =
-      AndroidLayoutAlgorithm._internal('NARROW_COLUMNS', 'NARROW_COLUMNS');
+  static const NARROW_COLUMNS = AndroidLayoutAlgorithm._internal(
+    'NARROW_COLUMNS',
+    'NARROW_COLUMNS',
+  );
 
   ///NORMAL means no rendering changes. This is the recommended choice for maximum compatibility across different platforms and Android versions.
   static const NORMAL = AndroidLayoutAlgorithm._internal('NORMAL', 'NORMAL');
@@ -146,8 +162,10 @@ class AndroidLayoutAlgorithm {
   ///It is recommended to enable zoom support [InAppWebViewOptions.supportZoom] when using this mode.
   ///
   ///**NOTE**: available on Android 19+.
-  static const TEXT_AUTOSIZING =
-      AndroidLayoutAlgorithm._internal('TEXT_AUTOSIZING', 'TEXT_AUTOSIZING');
+  static const TEXT_AUTOSIZING = AndroidLayoutAlgorithm._internal(
+    'TEXT_AUTOSIZING',
+    'TEXT_AUTOSIZING',
+  );
 
   ///Set of all values of [AndroidLayoutAlgorithm].
   static final Set<AndroidLayoutAlgorithm> values = [
@@ -160,8 +178,9 @@ class AndroidLayoutAlgorithm {
   static AndroidLayoutAlgorithm? fromValue(String? value) {
     if (value != null) {
       try {
-        return AndroidLayoutAlgorithm.values
-            .firstWhere((element) => element.toValue() == value);
+        return AndroidLayoutAlgorithm.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -173,8 +192,9 @@ class AndroidLayoutAlgorithm {
   static AndroidLayoutAlgorithm? fromNativeValue(String? value) {
     if (value != null) {
       try {
-        return AndroidLayoutAlgorithm.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return AndroidLayoutAlgorithm.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -190,8 +210,9 @@ class AndroidLayoutAlgorithm {
   static AndroidLayoutAlgorithm? byName(String? name) {
     if (name != null) {
       try {
-        return AndroidLayoutAlgorithm.values
-            .firstWhere((element) => element.name() == name);
+        return AndroidLayoutAlgorithm.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -209,14 +230,14 @@ class AndroidLayoutAlgorithm {
   /// them will be represented in the returned map.
   static Map<String, AndroidLayoutAlgorithm> asNameMap() =>
       <String, AndroidLayoutAlgorithm>{
-        for (final value in AndroidLayoutAlgorithm.values) value.name(): value
+        for (final value in AndroidLayoutAlgorithm.values) value.name(): value,
       };
 
   ///Gets [String] value.
   String toValue() => _value;
 
-  ///Gets [String] native value.
-  String toNativeValue() => _nativeValue;
+  ///Gets [String] native value if supported by the current platform, otherwise `null`.
+  String? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -236,6 +257,11 @@ class AndroidLayoutAlgorithm {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

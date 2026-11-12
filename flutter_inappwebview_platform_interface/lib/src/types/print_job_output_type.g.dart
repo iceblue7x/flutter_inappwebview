@@ -9,12 +9,13 @@ part of 'print_job_output_type.dart';
 ///Class representing the kind of printable content of a [PlatformPrintJobController].
 class PrintJobOutputType {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const PrintJobOutputType._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory PrintJobOutputType._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      PrintJobOutputType._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => PrintJobOutputType._internal(value, nativeValue());
 
   ///Specifies that the printed content consists of mixed text, graphics, and images.
   ///The default paper is Letter, A4, or similar locale-specific designation.
@@ -50,8 +51,9 @@ class PrintJobOutputType {
   static PrintJobOutputType? fromValue(int? value) {
     if (value != null) {
       try {
-        return PrintJobOutputType.values
-            .firstWhere((element) => element.toValue() == value);
+        return PrintJobOutputType.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -63,8 +65,9 @@ class PrintJobOutputType {
   static PrintJobOutputType? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return PrintJobOutputType.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return PrintJobOutputType.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -80,8 +83,9 @@ class PrintJobOutputType {
   static PrintJobOutputType? byName(String? name) {
     if (name != null) {
       try {
-        return PrintJobOutputType.values
-            .firstWhere((element) => element.name() == name);
+        return PrintJobOutputType.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -99,14 +103,14 @@ class PrintJobOutputType {
   /// them will be represented in the returned map.
   static Map<String, PrintJobOutputType> asNameMap() =>
       <String, PrintJobOutputType>{
-        for (final value in PrintJobOutputType.values) value.name(): value
+        for (final value in PrintJobOutputType.values) value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -128,6 +132,11 @@ class PrintJobOutputType {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

@@ -10,13 +10,16 @@ part of 'should_allow_deprecated_tls_action.dart';
 ///It represents the policy to pass back to the decision handler.
 class ShouldAllowDeprecatedTLSAction {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const ShouldAllowDeprecatedTLSAction._internal(
-      this._value, this._nativeValue);
-// ignore: unused_element
+    this._value,
+    this._nativeValue,
+  );
+  // ignore: unused_element
   factory ShouldAllowDeprecatedTLSAction._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      ShouldAllowDeprecatedTLSAction._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => ShouldAllowDeprecatedTLSAction._internal(value, nativeValue());
 
   ///Allow the navigation to continue.
   static const ALLOW = ShouldAllowDeprecatedTLSAction._internal(1, 1);
@@ -34,8 +37,9 @@ class ShouldAllowDeprecatedTLSAction {
   static ShouldAllowDeprecatedTLSAction? fromValue(int? value) {
     if (value != null) {
       try {
-        return ShouldAllowDeprecatedTLSAction.values
-            .firstWhere((element) => element.toValue() == value);
+        return ShouldAllowDeprecatedTLSAction.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -47,8 +51,9 @@ class ShouldAllowDeprecatedTLSAction {
   static ShouldAllowDeprecatedTLSAction? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return ShouldAllowDeprecatedTLSAction.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return ShouldAllowDeprecatedTLSAction.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -64,8 +69,9 @@ class ShouldAllowDeprecatedTLSAction {
   static ShouldAllowDeprecatedTLSAction? byName(String? name) {
     if (name != null) {
       try {
-        return ShouldAllowDeprecatedTLSAction.values
-            .firstWhere((element) => element.name() == name);
+        return ShouldAllowDeprecatedTLSAction.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -84,14 +90,14 @@ class ShouldAllowDeprecatedTLSAction {
   static Map<String, ShouldAllowDeprecatedTLSAction> asNameMap() =>
       <String, ShouldAllowDeprecatedTLSAction>{
         for (final value in ShouldAllowDeprecatedTLSAction.values)
-          value.name(): value
+          value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -110,6 +116,11 @@ class ShouldAllowDeprecatedTLSAction {
   @override
   bool operator ==(value) => value == _value;
 
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
+
   @override
   String toString() {
     return name();
@@ -122,13 +133,16 @@ class ShouldAllowDeprecatedTLSAction {
 @Deprecated('Use ShouldAllowDeprecatedTLSAction instead')
 class IOSShouldAllowDeprecatedTLSAction {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const IOSShouldAllowDeprecatedTLSAction._internal(
-      this._value, this._nativeValue);
-// ignore: unused_element
+    this._value,
+    this._nativeValue,
+  );
+  // ignore: unused_element
   factory IOSShouldAllowDeprecatedTLSAction._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      IOSShouldAllowDeprecatedTLSAction._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => IOSShouldAllowDeprecatedTLSAction._internal(value, nativeValue());
 
   ///Allow the navigation to continue.
   static const ALLOW = IOSShouldAllowDeprecatedTLSAction._internal(1, 1);
@@ -146,8 +160,9 @@ class IOSShouldAllowDeprecatedTLSAction {
   static IOSShouldAllowDeprecatedTLSAction? fromValue(int? value) {
     if (value != null) {
       try {
-        return IOSShouldAllowDeprecatedTLSAction.values
-            .firstWhere((element) => element.toValue() == value);
+        return IOSShouldAllowDeprecatedTLSAction.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -159,8 +174,9 @@ class IOSShouldAllowDeprecatedTLSAction {
   static IOSShouldAllowDeprecatedTLSAction? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return IOSShouldAllowDeprecatedTLSAction.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return IOSShouldAllowDeprecatedTLSAction.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -176,8 +192,9 @@ class IOSShouldAllowDeprecatedTLSAction {
   static IOSShouldAllowDeprecatedTLSAction? byName(String? name) {
     if (name != null) {
       try {
-        return IOSShouldAllowDeprecatedTLSAction.values
-            .firstWhere((element) => element.name() == name);
+        return IOSShouldAllowDeprecatedTLSAction.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -196,14 +213,14 @@ class IOSShouldAllowDeprecatedTLSAction {
   static Map<String, IOSShouldAllowDeprecatedTLSAction> asNameMap() =>
       <String, IOSShouldAllowDeprecatedTLSAction>{
         for (final value in IOSShouldAllowDeprecatedTLSAction.values)
-          value.name(): value
+          value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -221,6 +238,11 @@ class IOSShouldAllowDeprecatedTLSAction {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

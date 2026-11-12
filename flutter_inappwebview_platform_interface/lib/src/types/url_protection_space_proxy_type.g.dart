@@ -9,32 +9,41 @@ part of 'url_protection_space_proxy_type.dart';
 ///Class that represents the supported proxy types.
 class URLProtectionSpaceProxyType {
   final String _value;
-  final String _nativeValue;
+  final String? _nativeValue;
   const URLProtectionSpaceProxyType._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory URLProtectionSpaceProxyType._internalMultiPlatform(
-          String value, Function nativeValue) =>
-      URLProtectionSpaceProxyType._internal(value, nativeValue());
+    String value,
+    Function nativeValue,
+  ) => URLProtectionSpaceProxyType._internal(value, nativeValue());
 
   ///The proxy type for FTP proxies.
   static const URL_PROTECTION_SPACE_FTP_PROXY =
       URLProtectionSpaceProxyType._internal(
-          'NSURLProtectionSpaceFTPProxy', 'NSURLProtectionSpaceFTPProxy');
+        'NSURLProtectionSpaceFTPProxy',
+        'NSURLProtectionSpaceFTPProxy',
+      );
 
   ///The proxy type for HTTPS proxies.
   static const URL_PROTECTION_SPACE_HTTPS_PROXY =
       URLProtectionSpaceProxyType._internal(
-          'NSURLProtectionSpaceHTTPSProxy', 'NSURLProtectionSpaceHTTPSProxy');
+        'NSURLProtectionSpaceHTTPSProxy',
+        'NSURLProtectionSpaceHTTPSProxy',
+      );
 
   ///The proxy type for HTTP proxies.
   static const URL_PROTECTION_SPACE_HTTP_PROXY =
       URLProtectionSpaceProxyType._internal(
-          'NSURLProtectionSpaceHTTPProxy', 'NSURLProtectionSpaceHTTPProxy');
+        'NSURLProtectionSpaceHTTPProxy',
+        'NSURLProtectionSpaceHTTPProxy',
+      );
 
   ///The proxy type for SOCKS proxies.
   static const URL_PROTECTION_SPACE_SOCKS_PROXY =
       URLProtectionSpaceProxyType._internal(
-          'NSURLProtectionSpaceSOCKSProxy', 'NSURLProtectionSpaceSOCKSProxy');
+        'NSURLProtectionSpaceSOCKSProxy',
+        'NSURLProtectionSpaceSOCKSProxy',
+      );
 
   ///Set of all values of [URLProtectionSpaceProxyType].
   static final Set<URLProtectionSpaceProxyType> values = [
@@ -48,8 +57,9 @@ class URLProtectionSpaceProxyType {
   static URLProtectionSpaceProxyType? fromValue(String? value) {
     if (value != null) {
       try {
-        return URLProtectionSpaceProxyType.values
-            .firstWhere((element) => element.toValue() == value);
+        return URLProtectionSpaceProxyType.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -61,8 +71,9 @@ class URLProtectionSpaceProxyType {
   static URLProtectionSpaceProxyType? fromNativeValue(String? value) {
     if (value != null) {
       try {
-        return URLProtectionSpaceProxyType.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return URLProtectionSpaceProxyType.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -78,8 +89,9 @@ class URLProtectionSpaceProxyType {
   static URLProtectionSpaceProxyType? byName(String? name) {
     if (name != null) {
       try {
-        return URLProtectionSpaceProxyType.values
-            .firstWhere((element) => element.name() == name);
+        return URLProtectionSpaceProxyType.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -98,14 +110,14 @@ class URLProtectionSpaceProxyType {
   static Map<String, URLProtectionSpaceProxyType> asNameMap() =>
       <String, URLProtectionSpaceProxyType>{
         for (final value in URLProtectionSpaceProxyType.values)
-          value.name(): value
+          value.name(): value,
       };
 
   ///Gets [String] value.
   String toValue() => _value;
 
-  ///Gets [String] native value.
-  String toNativeValue() => _nativeValue;
+  ///Gets [String] native value if supported by the current platform, otherwise `null`.
+  String? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -128,6 +140,11 @@ class URLProtectionSpaceProxyType {
   @override
   bool operator ==(value) => value == _value;
 
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
+
   @override
   String toString() {
     return _value;
@@ -139,33 +156,44 @@ class URLProtectionSpaceProxyType {
 @Deprecated('Use URLProtectionSpaceProxyType instead')
 class IOSNSURLProtectionSpaceProxyType {
   final String _value;
-  final String _nativeValue;
+  final String? _nativeValue;
   const IOSNSURLProtectionSpaceProxyType._internal(
-      this._value, this._nativeValue);
-// ignore: unused_element
+    this._value,
+    this._nativeValue,
+  );
+  // ignore: unused_element
   factory IOSNSURLProtectionSpaceProxyType._internalMultiPlatform(
-          String value, Function nativeValue) =>
-      IOSNSURLProtectionSpaceProxyType._internal(value, nativeValue());
+    String value,
+    Function nativeValue,
+  ) => IOSNSURLProtectionSpaceProxyType._internal(value, nativeValue());
 
   ///The proxy type for FTP proxies.
   static const NSURL_PROTECTION_SPACE_FTP_PROXY =
       IOSNSURLProtectionSpaceProxyType._internal(
-          'NSURLProtectionSpaceFTPProxy', 'NSURLProtectionSpaceFTPProxy');
+        'NSURLProtectionSpaceFTPProxy',
+        'NSURLProtectionSpaceFTPProxy',
+      );
 
   ///The proxy type for HTTPS proxies.
   static const NSURL_PROTECTION_SPACE_HTTPS_PROXY =
       IOSNSURLProtectionSpaceProxyType._internal(
-          'NSURLProtectionSpaceHTTPSProxy', 'NSURLProtectionSpaceHTTPSProxy');
+        'NSURLProtectionSpaceHTTPSProxy',
+        'NSURLProtectionSpaceHTTPSProxy',
+      );
 
   ///The proxy type for SOCKS proxies.
   static const NSURL_PROTECTION_SPACE_SOCKS_PROXY =
       IOSNSURLProtectionSpaceProxyType._internal(
-          'NSURLProtectionSpaceSOCKSProxy', 'NSURLProtectionSpaceSOCKSProxy');
+        'NSURLProtectionSpaceSOCKSProxy',
+        'NSURLProtectionSpaceSOCKSProxy',
+      );
 
   ///The proxy type for HTTP proxies.
   static const NSUR_PROTECTION_SPACE_HTTP_PROXY =
       IOSNSURLProtectionSpaceProxyType._internal(
-          'NSURLProtectionSpaceHTTPProxy', 'NSURLProtectionSpaceHTTPProxy');
+        'NSURLProtectionSpaceHTTPProxy',
+        'NSURLProtectionSpaceHTTPProxy',
+      );
 
   ///Set of all values of [IOSNSURLProtectionSpaceProxyType].
   static final Set<IOSNSURLProtectionSpaceProxyType> values = [
@@ -179,8 +207,9 @@ class IOSNSURLProtectionSpaceProxyType {
   static IOSNSURLProtectionSpaceProxyType? fromValue(String? value) {
     if (value != null) {
       try {
-        return IOSNSURLProtectionSpaceProxyType.values
-            .firstWhere((element) => element.toValue() == value);
+        return IOSNSURLProtectionSpaceProxyType.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -192,8 +221,9 @@ class IOSNSURLProtectionSpaceProxyType {
   static IOSNSURLProtectionSpaceProxyType? fromNativeValue(String? value) {
     if (value != null) {
       try {
-        return IOSNSURLProtectionSpaceProxyType.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return IOSNSURLProtectionSpaceProxyType.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -209,8 +239,9 @@ class IOSNSURLProtectionSpaceProxyType {
   static IOSNSURLProtectionSpaceProxyType? byName(String? name) {
     if (name != null) {
       try {
-        return IOSNSURLProtectionSpaceProxyType.values
-            .firstWhere((element) => element.name() == name);
+        return IOSNSURLProtectionSpaceProxyType.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -229,14 +260,14 @@ class IOSNSURLProtectionSpaceProxyType {
   static Map<String, IOSNSURLProtectionSpaceProxyType> asNameMap() =>
       <String, IOSNSURLProtectionSpaceProxyType>{
         for (final value in IOSNSURLProtectionSpaceProxyType.values)
-          value.name(): value
+          value.name(): value,
       };
 
   ///Gets [String] value.
   String toValue() => _value;
 
-  ///Gets [String] native value.
-  String toNativeValue() => _nativeValue;
+  ///Gets [String] native value if supported by the current platform, otherwise `null`.
+  String? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -258,6 +289,11 @@ class IOSNSURLProtectionSpaceProxyType {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

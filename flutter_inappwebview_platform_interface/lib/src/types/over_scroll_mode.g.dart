@@ -10,12 +10,13 @@ part of 'over_scroll_mode.dart';
 ///Setting the over-scroll mode of a WebView will have an effect only if the `WebView` is capable of scrolling.
 class OverScrollMode {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const OverScrollMode._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory OverScrollMode._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      OverScrollMode._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => OverScrollMode._internal(value, nativeValue());
 
   ///Always allow a user to over-scroll this view, provided it is a view that can scroll.
   static const ALWAYS = OverScrollMode._internal(0, 0);
@@ -37,8 +38,9 @@ class OverScrollMode {
   static OverScrollMode? fromValue(int? value) {
     if (value != null) {
       try {
-        return OverScrollMode.values
-            .firstWhere((element) => element.toValue() == value);
+        return OverScrollMode.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -50,8 +52,9 @@ class OverScrollMode {
   static OverScrollMode? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return OverScrollMode.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return OverScrollMode.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -67,8 +70,9 @@ class OverScrollMode {
   static OverScrollMode? byName(String? name) {
     if (name != null) {
       try {
-        return OverScrollMode.values
-            .firstWhere((element) => element.name() == name);
+        return OverScrollMode.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -85,14 +89,14 @@ class OverScrollMode {
   /// same value, or being values of different enum type), at most one of
   /// them will be represented in the returned map.
   static Map<String, OverScrollMode> asNameMap() => <String, OverScrollMode>{
-        for (final value in OverScrollMode.values) value.name(): value
-      };
+    for (final value in OverScrollMode.values) value.name(): value,
+  };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -113,6 +117,11 @@ class OverScrollMode {
   @override
   bool operator ==(value) => value == _value;
 
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
+
   @override
   String toString() {
     return name();
@@ -125,19 +134,22 @@ class OverScrollMode {
 @Deprecated('Use OverScrollMode instead')
 class AndroidOverScrollMode {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const AndroidOverScrollMode._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory AndroidOverScrollMode._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      AndroidOverScrollMode._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => AndroidOverScrollMode._internal(value, nativeValue());
 
   ///Always allow a user to over-scroll this view, provided it is a view that can scroll.
   static const OVER_SCROLL_ALWAYS = AndroidOverScrollMode._internal(0, 0);
 
   ///Allow a user to over-scroll this view only if the content is large enough to meaningfully scroll, provided it is a view that can scroll.
-  static const OVER_SCROLL_IF_CONTENT_SCROLLS =
-      AndroidOverScrollMode._internal(1, 1);
+  static const OVER_SCROLL_IF_CONTENT_SCROLLS = AndroidOverScrollMode._internal(
+    1,
+    1,
+  );
 
   ///Never allow a user to over-scroll this view.
   static const OVER_SCROLL_NEVER = AndroidOverScrollMode._internal(2, 2);
@@ -153,8 +165,9 @@ class AndroidOverScrollMode {
   static AndroidOverScrollMode? fromValue(int? value) {
     if (value != null) {
       try {
-        return AndroidOverScrollMode.values
-            .firstWhere((element) => element.toValue() == value);
+        return AndroidOverScrollMode.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -166,8 +179,9 @@ class AndroidOverScrollMode {
   static AndroidOverScrollMode? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return AndroidOverScrollMode.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return AndroidOverScrollMode.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -183,8 +197,9 @@ class AndroidOverScrollMode {
   static AndroidOverScrollMode? byName(String? name) {
     if (name != null) {
       try {
-        return AndroidOverScrollMode.values
-            .firstWhere((element) => element.name() == name);
+        return AndroidOverScrollMode.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -202,14 +217,14 @@ class AndroidOverScrollMode {
   /// them will be represented in the returned map.
   static Map<String, AndroidOverScrollMode> asNameMap() =>
       <String, AndroidOverScrollMode>{
-        for (final value in AndroidOverScrollMode.values) value.name(): value
+        for (final value in AndroidOverScrollMode.values) value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -229,6 +244,11 @@ class AndroidOverScrollMode {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

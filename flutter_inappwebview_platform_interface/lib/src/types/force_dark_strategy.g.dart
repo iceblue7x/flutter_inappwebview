@@ -9,12 +9,13 @@ part of 'force_dark_strategy.dart';
 ///Class used to indicate how `WebView` content should be darkened.
 class ForceDarkStrategy {
   final int _value;
-  final int _nativeValue;
+  final int? _nativeValue;
   const ForceDarkStrategy._internal(this._value, this._nativeValue);
-// ignore: unused_element
+  // ignore: unused_element
   factory ForceDarkStrategy._internalMultiPlatform(
-          int value, Function nativeValue) =>
-      ForceDarkStrategy._internal(value, nativeValue());
+    int value,
+    Function nativeValue,
+  ) => ForceDarkStrategy._internal(value, nativeValue());
 
   ///In this mode `WebView` content will be darkened by a user agent unless web page supports dark theme.
   ///`WebView` determines whether web pages supports dark theme by the presence of `color-scheme` metadata containing `"dark"` value.
@@ -48,8 +49,9 @@ class ForceDarkStrategy {
   static ForceDarkStrategy? fromValue(int? value) {
     if (value != null) {
       try {
-        return ForceDarkStrategy.values
-            .firstWhere((element) => element.toValue() == value);
+        return ForceDarkStrategy.values.firstWhere(
+          (element) => element.toValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -61,8 +63,9 @@ class ForceDarkStrategy {
   static ForceDarkStrategy? fromNativeValue(int? value) {
     if (value != null) {
       try {
-        return ForceDarkStrategy.values
-            .firstWhere((element) => element.toNativeValue() == value);
+        return ForceDarkStrategy.values.firstWhere(
+          (element) => element.toNativeValue() == value,
+        );
       } catch (e) {
         return null;
       }
@@ -78,8 +81,9 @@ class ForceDarkStrategy {
   static ForceDarkStrategy? byName(String? name) {
     if (name != null) {
       try {
-        return ForceDarkStrategy.values
-            .firstWhere((element) => element.name() == name);
+        return ForceDarkStrategy.values.firstWhere(
+          (element) => element.name() == name,
+        );
       } catch (e) {
         return null;
       }
@@ -97,14 +101,14 @@ class ForceDarkStrategy {
   /// them will be represented in the returned map.
   static Map<String, ForceDarkStrategy> asNameMap() =>
       <String, ForceDarkStrategy>{
-        for (final value in ForceDarkStrategy.values) value.name(): value
+        for (final value in ForceDarkStrategy.values) value.name(): value,
       };
 
   ///Gets [int] value.
   int toValue() => _value;
 
-  ///Gets [int] native value.
-  int toNativeValue() => _nativeValue;
+  ///Gets [int] native value if supported by the current platform, otherwise `null`.
+  int? toNativeValue() => _nativeValue;
 
   ///Gets the name of the value.
   String name() {
@@ -124,6 +128,11 @@ class ForceDarkStrategy {
 
   @override
   bool operator ==(value) => value == _value;
+
+  ///Checks if the value is supported by the [defaultTargetPlatform].
+  bool isSupported() {
+    return _nativeValue != null;
+  }
 
   @override
   String toString() {

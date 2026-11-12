@@ -11,55 +11,58 @@ class FrameInfo {
   ///The unique identifier of the frame associated with the current [FrameInfo].
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   int? frameId;
 
   ///A Boolean value indicating whether the frame is the web site's main frame or a subframe.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- iOS
-  ///- MacOS
-  ///- Windows
+  ///- iOS WKWebView
+  ///- macOS WKWebView
+  ///- Windows WebView2
   bool isMainFrame;
 
   ///The kind of the frame.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   FrameKind? kind;
 
   ///Gets the name attribute of the frame, as in <iframe name="frame-name">...</iframe>.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- Windows
+  ///- Windows WebView2
   String? name;
 
   ///The frame’s current request.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- iOS
-  ///- MacOS
-  ///- Windows
+  ///- iOS WKWebView
+  ///- macOS WKWebView
+  ///- Windows WebView2
   URLRequest? request;
 
   ///The frame’s security origin.
   ///
   ///**Officially Supported Platforms/Implementations**:
-  ///- iOS
-  ///- MacOS
-  ///- Windows
+  ///- iOS WKWebView
+  ///- macOS WKWebView
+  ///- Windows WebView2
   SecurityOrigin? securityOrigin;
-  FrameInfo(
-      {this.frameId,
-      required this.isMainFrame,
-      this.kind,
-      this.name,
-      this.request,
-      this.securityOrigin});
+  FrameInfo({
+    this.frameId,
+    required this.isMainFrame,
+    this.kind,
+    this.name,
+    this.request,
+    this.securityOrigin,
+  });
 
   ///Gets a possible [FrameInfo] instance from a [Map] value.
-  static FrameInfo? fromMap(Map<String, dynamic>? map,
-      {EnumMethod? enumMethod}) {
+  static FrameInfo? fromMap(
+    Map<String, dynamic>? map, {
+    EnumMethod? enumMethod,
+  }) {
     if (map == null) {
       return null;
     }
@@ -69,14 +72,17 @@ class FrameInfo {
       kind: switch (enumMethod ?? EnumMethod.nativeValue) {
         EnumMethod.nativeValue => FrameKind.fromNativeValue(map['kind']),
         EnumMethod.value => FrameKind.fromValue(map['kind']),
-        EnumMethod.name => FrameKind.byName(map['kind'])
+        EnumMethod.name => FrameKind.byName(map['kind']),
       },
       name: map['name'],
-      request: URLRequest.fromMap(map['request']?.cast<String, dynamic>(),
-          enumMethod: enumMethod),
+      request: URLRequest.fromMap(
+        map['request']?.cast<String, dynamic>(),
+        enumMethod: enumMethod,
+      ),
       securityOrigin: SecurityOrigin.fromMap(
-          map['securityOrigin']?.cast<String, dynamic>(),
-          enumMethod: enumMethod),
+        map['securityOrigin']?.cast<String, dynamic>(),
+        enumMethod: enumMethod,
+      ),
     );
     return instance;
   }
@@ -89,7 +95,7 @@ class FrameInfo {
       "kind": switch (enumMethod ?? EnumMethod.nativeValue) {
         EnumMethod.nativeValue => kind?.toNativeValue(),
         EnumMethod.value => kind?.toValue(),
-        EnumMethod.name => kind?.name()
+        EnumMethod.name => kind?.name(),
       },
       "name": name,
       "request": request?.toMap(enumMethod: enumMethod),
@@ -123,22 +129,30 @@ class IOSWKFrameInfo {
 
   ///The frame’s security origin.
   IOSWKSecurityOrigin? securityOrigin;
-  IOSWKFrameInfo(
-      {required this.isMainFrame, this.request, this.securityOrigin});
+  IOSWKFrameInfo({
+    required this.isMainFrame,
+    this.request,
+    this.securityOrigin,
+  });
 
   ///Gets a possible [IOSWKFrameInfo] instance from a [Map] value.
-  static IOSWKFrameInfo? fromMap(Map<String, dynamic>? map,
-      {EnumMethod? enumMethod}) {
+  static IOSWKFrameInfo? fromMap(
+    Map<String, dynamic>? map, {
+    EnumMethod? enumMethod,
+  }) {
     if (map == null) {
       return null;
     }
     final instance = IOSWKFrameInfo(
       isMainFrame: map['isMainFrame'],
-      request: URLRequest.fromMap(map['request']?.cast<String, dynamic>(),
-          enumMethod: enumMethod),
+      request: URLRequest.fromMap(
+        map['request']?.cast<String, dynamic>(),
+        enumMethod: enumMethod,
+      ),
       securityOrigin: IOSWKSecurityOrigin.fromMap(
-          map['securityOrigin']?.cast<String, dynamic>(),
-          enumMethod: enumMethod),
+        map['securityOrigin']?.cast<String, dynamic>(),
+        enumMethod: enumMethod,
+      ),
     );
     return instance;
   }
